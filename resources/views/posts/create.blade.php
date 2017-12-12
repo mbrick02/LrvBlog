@@ -38,6 +38,7 @@
                   @endphp
                 @endforeach
                 </label>
+                <!-- button to open tag create form holding form info in session var <button class="button" onClick="window.open('http://www.site.com');"><span class="icon">Open</span></button> -->
               </fieldset>
             </div>
           </div>
