@@ -11,3 +11,6 @@ npm-debug.log
 yarn-error.log
 .env
 /.metadata/
+/.buildpath
+/.project
+/.x121217project
