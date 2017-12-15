@@ -37,8 +37,10 @@
                     $lettercount = $lettercount + strlen("{{$tag->name}}");
                   @endphp
                 @endforeach
-                </label>
-                <!-- button to open tag create form holding form info in session var <button class="button" onClick="window.open('http://www.site.com');"><span class="icon">Open</span></button> -->
+              </fieldset>
+              <fieldset class="tag-button">
+              	<!-- button to open tag create form holding form info in session var 
+              	<button class="button" onClick="window.open('/tags rather than http://www.site.com');"><span class="icon">Open</span></button> -->
               </fieldset>
             </div>
           </div>
