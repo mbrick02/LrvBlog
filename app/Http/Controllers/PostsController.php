@@ -11,7 +11,7 @@ class PostsController extends Controller
 {     // controller actions (methods)
   public function __construct(){
       $this->middleware('auth')->except(['index', 'show']);
-    // must be signed in to see page, except index ?and show
+    // must be signed in to see PostsController pages, except index and show
   }
   public function index(){
 

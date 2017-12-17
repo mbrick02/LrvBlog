@@ -2,11 +2,11 @@
 
 @section('content')
     <div class="col-sm-8 blog-main">
-        <h1>Publish a Post</h1>
+        <h1>Create a new tag</h1>
 
         <hr>
-
-        <form method="POST" action="/posts">
+		// TODO: rework this as tag create (rather than Post Publish)
+        <form method="POST" action="/tags">
 
           {{ csrf_field() }}
 
