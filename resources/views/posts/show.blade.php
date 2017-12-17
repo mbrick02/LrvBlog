@@ -25,8 +25,9 @@
         @endforeach
       </ul>
     </div>
-
-    {{-- Add a comment --}}
+    
+    @if (Auth::check())
+    {{-- Add a comment if auth/logged-in --}}
     <div class="card"> <!-- twitter bootstrap 4 class -->
       <div class="card-block">
         <form method="POST" action="/posts/{{ $post->id }}/comments">
@@ -43,6 +44,7 @@
         @include('layouts.errors')
       </div>
     </div>
+    @endif
 
   </div>
 @endsection
