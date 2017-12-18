@@ -41,8 +41,8 @@
               <fieldset class="tag-button">
               	<!-- button to open tag create form holding form info in session var -->
               	<button class="button" 
-              	onClick="window.open('/tags');">
-              	<span class="icon">Open</span></button>
+              	onClick="window.open('/tags/create');">
+              	<span class="icon">Create New Tag</span></button>
               </fieldset>
             </div>
           </div>

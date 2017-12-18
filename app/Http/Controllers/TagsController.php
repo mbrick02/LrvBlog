@@ -13,7 +13,7 @@ class TagsController extends Controller
     }
     
     public function index(Tag $tag) {
-      // show list of tags available for post
+      // show list of post avail. for tag
       $posts = $tag->posts;
     
       return view('posts.index', compact('posts'));
@@ -22,8 +22,8 @@ class TagsController extends Controller
     
     public function create() {
         // TODO: send to tag create form
-        $tags = Tag::all(); // may not list all tags since the form just adds a new tag
-        return view('tags.create', compact('tags'));
+        $tags = Tag::orderBy('name', 'desc')->get(); // may not list all tags since the form just adds a new tag
+        return view('tags.create', compact('tags'), ['form_type' => 'Tag']);
     }
     
     public function store() {

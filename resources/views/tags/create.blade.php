@@ -1,5 +1,5 @@
-@extends('layouts.master')
-
+@extends('layouts.simpleForm')
+<!-- Tag create form -->
 @section('content')
     <div class="col-sm-8 blog-main">
         <h1>Create a new tag</h1>

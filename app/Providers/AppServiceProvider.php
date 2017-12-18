@@ -23,7 +23,7 @@ class AppServiceProvider extends ServiceProvider
        //    with a dedicated class for your composer
        view()->composer('layouts.sidebar', function ($view) {
          $archives = \App\Post::archives();
-         $tags = \App\Tag::has('posts')->pluck('name');
+         $tags = \App\Tag::has('posts')->orderBy('name', 'asc')->pluck('name');
          $view->with(compact('archives', 'tags'));
         });
     }

@@ -34,7 +34,7 @@ class PostsController extends Controller
     }
 
     public function create() {
-      $tags = Tag::all();
+      $tags = Tag::orderBy('name', 'asc')->get();
       return view('posts.create', compact('tags'));
     }
 
