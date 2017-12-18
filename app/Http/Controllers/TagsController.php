@@ -23,7 +23,8 @@ class TagsController extends Controller
     public function create() {
         // TODO: send to tag create form
         $tags = Tag::orderBy('name', 'desc')->get(); // may not list all tags since the form just adds a new tag
-        return view('tags.create', compact('tags'), ['form_type' => 'Tag']);
+        $form_type = 'Tag';
+        return view('tags.create', compact('tags', 'form_type'));
     }
     
     public function store() {

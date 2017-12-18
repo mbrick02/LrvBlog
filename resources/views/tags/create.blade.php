@@ -5,7 +5,10 @@
         <h1>Create a new tag</h1>
 
         <hr>
-		// TODO: rework this as tag create (rather than Post Publish)
+        <!-- TODO: rework this tag create
+       
+		// TODO: rework this as tag create
+       -->
         <form method="POST" action="/tags">
 
           {{ csrf_field() }}
@@ -16,6 +19,7 @@
             name="title" value="{{old('title')}}" required>
           </div>
           <div class="form-group">
+          <!-- *** May not need tag cloud (below) for create page ?why would they come here if tag already exists???  -->
             <div class="tag-cloud">
               <fieldset class="tag-cloud">
                 <legend class="tag-cloud">Tags to group by</legend>
