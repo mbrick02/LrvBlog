@@ -21,27 +21,15 @@
           <div class="form-group">
           <!-- *** May not need tag cloud (below) for create page ?why would they come here if tag already exists???  -->
             <div class="tag-cloud">
+                @php
               <fieldset class="tag-cloud">
                 <legend class="tag-cloud">Tags to group by</legend>
-                @php
-                  $lettercount = 0;
-                  $maxTagLetsPerLine = 30;
-                @endphp
-                @foreach ($tags as $tag)
-                 @if ($lettercount > $maxTagLetsPerLine)
-                  <br />
-                  $lettercount = 0;
-                 @endif
-                  <div class="tag-item">
-                    <input type="checkbox" name="tags[]" value="{{$tag->name}}"
-                    id="{{$tag->name}}">
-                    <label for="{{$tag->name}}">{{$tag->name}}</label>
-                  </div>
-                  @php
-                    $lettercount = $lettercount + strlen("{{$tag->name}}");
-                  @endphp
-                @endforeach
-              </fieldset>
+                // 2 lines above wer above larvl php see posts/create 
+                  // $lettercount = 0;
+                  // $maxTagLetsPerLine = 30;
+                  // had a "@foreach ($tags as $tag)" below see posts/create.blade.php 
+                @endphp 
+
               <fieldset class="tag-button">
               	<!-- button to open tag create form holding form info in session var -->
               	<button class="button" 

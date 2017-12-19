@@ -33,7 +33,8 @@ class TagsController extends Controller
             'tag' => 'required|min:2',
         ]);
         
-        // TODO after store, return to posts/create(.blade.php) with session content
+        // TODO after store, return to posts/create(.blade.php) 
+        //         with session content of post create form for reopening
         // redirect to home page
         return redirect('/posts/createwithPreviousContent');
     }
