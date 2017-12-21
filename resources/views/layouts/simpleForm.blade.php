@@ -25,7 +25,7 @@
       <div class="blog-header">
         <div class="container">
           <h1 class="blog-title">MB Simple {{$form_type}} Form</h1>
-          <p class="lead blog-description">Laracast blog template
+          <p class="lead blog-description">MB blog template
              built with Bootstrap.</p>
         </div>
       </div>
