@@ -45,6 +45,9 @@ class PostsController extends Controller
         'body' => 'required|min:2'
       ]);
 
+      // TODO: store checked tags
+      // $tagsChecked = $request->input('tagCheckboxArrayChecked???NOTSURE***');
+      
       // refactor designating post by user rather than Post::create
       auth()->user()->publish(
         new Post(request(['title', 'body']))

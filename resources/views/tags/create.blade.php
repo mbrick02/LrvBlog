@@ -1,6 +1,13 @@
 @extends('layouts.simpleForm')
 <!-- Tag create form -->
 @section('content')
+<script type="text/javascript">
+<!--
+	window.onload = function(){
+	alert('Tag window open captured title is {{$title}}');
+	};
+//-->
+</script>
     <div class="col-sm-8 blog-main">
         <h1>Create a new tag</h1>
 

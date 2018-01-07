@@ -24,7 +24,10 @@ class TagsController extends Controller
         // TODO: send to tag create form
         $tags = Tag::orderBy('name', 'desc')->get(); // may not list all tags since the form just adds a new tag
         $form_type = 'Tag';
-        return view('tags.create', compact('tags', 'form_type'));
+        // if (Input::has('title')) -- **this is just test to hold post create form data
+        $title = xxx???app('request')->exists('title') ? Input::get('title') : 'No title';
+        
+        return view('tags.create', compact('tags', 'form_type', 'title'));
     }
     
     public function store() {
