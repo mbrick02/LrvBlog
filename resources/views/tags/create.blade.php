@@ -22,8 +22,8 @@
 
           <div class="form-group">
             <label for="tagName">New Tag</label>
-            <input type="text" class="form-control" id="newTag" placeholder="NewTag"
-            name="tagName" value="{{old('newTag')}}" required>
+            <input type="text" class="form-control" id="newTag" placeholder="New Tag"
+            name="tag" value="{{old('newTag')}}" required>
           </div>
           <div class="form-group">
             <button type="submit" class="btn btn-primary">Create Tag</button>
