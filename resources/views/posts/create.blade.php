@@ -1,12 +1,29 @@
 @extends('layouts.master')
-
+<!-- note: may need masterSess. above to set vals -->
 @section('content')
+<script type="text/javascript">
+<!--
+	function retrievTitleNOpenTagsForm() {
+		// purpose is to set tile (and body) (?to session) to repopulate fields after new tag added 1/18 
+		$title = document.postCreateForm.elements["title"].value;
+
+		// below is to set title if none given but that may not be necessary
+		if ((!$title)) { //  || ((typeof $title) == undefined) || ($title == undefined) || ($title == null) || ($title == "")
+			$title = "No Title Given";
+		}
+		// test: alert(typeof $title);
+		// test: alert('title now is: ' + $title); // . " -- type: " . typeof($title));
+		window.open('/tags/create');
+		return true;
+	}
+//-->
+</script>
     <div class="col-sm-8 blog-main">
         <h1>Publish a Post</h1>
 
         <hr>
 
-        <form method="POST" action="/posts">
+        <form method="POST" action="/posts" name="postCreateForm">
 
           {{ csrf_field() }}
 
@@ -40,8 +57,8 @@
               </fieldset>
               <fieldset class="tag-button">
               	<!-- button to open tag create form holding form info in session var -->
-              	<button class="button" 
-              	onClick="window.open('/tags/create');">
+              	<button class="button" type="button" 
+              	onClick="return retrievTitleNOpenTagsForm();">
               	<span class="icon">Create New Tag</span></button>
               </fieldset>
             </div>

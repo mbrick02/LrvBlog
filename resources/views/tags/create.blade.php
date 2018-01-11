@@ -1,5 +1,5 @@
 @extends('layouts.simpleForm')
-<!-- Tag create form -->
+<!-- Tag create form also note: may need sess. above -->
 @section('content')
 <script type="text/javascript">
 <!--
@@ -21,9 +21,9 @@
           {{ csrf_field() }}
 
           <div class="form-group">
-            <label for="title">New Tag</label>
+            <label for="tagName">New Tag</label>
             <input type="text" class="form-control" id="newTag" placeholder="NewTag"
-            name="title" value="{{old('newTag')}}" required>
+            name="tagName" value="{{old('newTag')}}" required>
           </div>
           <div class="form-group">
             <button type="submit" class="btn btn-primary">Create Tag</button>
