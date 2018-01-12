@@ -2,7 +2,7 @@
 <!-- note: may need masterSess. above to set vals -->
 @section('content')
 <script type="text/javascript">
-<!--
+
 	function retrievTitleNOpenTagsForm() {
 		// purpose is to set tile (and body) (?to session) to repopulate fields after new tag added 1/18 
 		$title = document.postCreateForm.elements["title"].value;
@@ -16,7 +16,7 @@
 		window.open('/tags/create');
 		return true;
 	}
-//-->
+//
 </script>
     <div class="col-sm-8 blog-main">
         <h1>Publish a Post</h1>
