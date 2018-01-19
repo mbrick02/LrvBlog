@@ -40,6 +40,8 @@ class TagsController extends Controller
 
         session(['postTitle', $title]);
         session(['postBody', $body]);
+        
+        // TODO: ** Turn BACK ON -- Create new Tag ****
         // Validation
         /* $this->validate(request(), [
             'name' => 'required|min:2|max:20',

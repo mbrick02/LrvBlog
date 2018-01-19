@@ -47,7 +47,7 @@
 		  	session()->forget('postBody');
 		  @endphp
           <div class="form-group">
-            <label for="title">Title from Tag {{ $titleFigure **** out how to bring in title}}</label>
+            <label for="title">Title {{ Session::has('postTitle') ? Session::get('postTitle') : '*Debug* No Session post Title' }}</label>
             <input type="text" class="form-control" id="title" placeholder="Title"
             name="title" value="{{$curTitle}}" required>
           </div>
