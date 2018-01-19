@@ -170,6 +170,25 @@ h6,
   margin-bottom: 0;
 }
 
+/*
+MB Added
+*/
+div.tag-item {
+	width: 70%;
+	margin-left: 10%;
+}
+
+.clearfix::after {
+	content: "";
+	clear: both;
+	display: table;
+}
+
+span.tag-item {
+	float: left;
+	margin-right: 2em;
+}
+
 #mbflash-message {
   position: absolute;
   bottom: 20px;

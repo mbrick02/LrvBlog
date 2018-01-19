@@ -5,15 +5,26 @@
 
 	function retrievTitleNOpenTagsForm() {
 		// purpose is to set tile (and body) (?to session) to repopulate fields after new tag added 1/18 
-		$title = document.postCreateForm.elements["title"].value;
+		$postTitle = document.postCreateForm.elements["title"].value;
+		$postBody = document.postCreateForm.elements["body"].value;
+		
+		
 
-		// below is to set title if none given but that may not be necessary
-		if ((!$title)) { //  || ((typeof $title) == undefined) || ($title == undefined) || ($title == null) || ($title == "")
-			$title = "No Title Given";
+		// set title if given
+		if ($postTitle) { //  || ((typeof $title) == undefined) || ($title == undefined) || ($title == null) || ($title == "")
+			sessionStorage.setItem("postTitle", $postTitle);
 		}
-		// test: alert(typeof $title);
-		// test: alert('title now is: ' + $title); // . " -- type: " . typeof($title));
-		window.open('/tags/create');
+
+		if ($postBody) { //  || ((typeof $title) == undefined) || ($title == undefined) || ($title == null) || ($title == "")
+			sessionStorage.setItem("postBody", $postBody);
+		}
+		
+		// window.open('/tags/create');  -- instead we POST to tags/create route
+		document.postCreateForm.method = "get";  // want to open (web.php) Route::get('/tags/create', 'TagsController@create'); 
+		document.postCreateForm.action ="/tags/create";
+		document.postCreateForm.submit();
+		
+		
 		return true;
 	}
 //
@@ -27,33 +38,32 @@
 
           {{ csrf_field() }}
 
+		  @php
+		  	$curBody = session('postBody', 'empty') ?: (session('postBody') ?: old('body'));
+		  	// **???*** if (isset(_SESSION["postBody"])) { $curBody = _SESSION["postBody"]; }
+		  	$curTitle = session('postTitle', '') ?: (session('postTitle') ?: old('title'));  
+		  	// ***Use in title body tag below
+		  	session()->forget('postTitle'); // clear
+		  	session()->forget('postBody');
+		  @endphp
           <div class="form-group">
-            <label for="title">Title</label>
+            <label for="title">Title from Tag {{ $titleFigure **** out how to bring in title}}</label>
             <input type="text" class="form-control" id="title" placeholder="Title"
-            name="title" value="{{old('title')}}" required>
+            name="title" value="{{$curTitle}}" required>
           </div>
           <div class="form-group">
             <div class="tag-cloud">
               <fieldset class="tag-cloud">
-                <legend class="tag-cloud">Tags to group by</legend>
-                @php
-                  $lettercount = 0;
-                  $maxTagLetsPerLine = 30;
-                @endphp
-                @foreach ($tags as $tag)
-                 @if ($lettercount > $maxTagLetsPerLine)
-                  <br />
-                  $lettercount = 0;
-                 @endif
-                  <div class="tag-item">
-                    <input type="checkbox" name="tags[]" value="{{$tag->name}}"
-                    id="{{$tag->name}}">
-                    <label for="{{$tag->name}}">{{$tag->name}}</label>
-                  </div>
-                  @php
-                    $lettercount = $lettercount + strlen("{{$tag->name}}");
-                  @endphp
-                @endforeach
+                <legend class="tag-cloud">Tags to group by</legend>                
+                <div class="tag-item clearfix">
+                    @foreach ($tags as $tag)
+                     <span class="tag-item">
+                        <input type="checkbox" name="tags[]" value="{{$tag->name}}"
+                        id="{{$tag->name}}">
+                        <label for="{{$tag->name}}">{{$tag->name}}</label>
+                     </span>
+                    @endforeach
+                </div>
               </fieldset>
               <fieldset class="tag-button">
               	<!-- button to open tag create form holding form info in session var -->
@@ -67,7 +77,7 @@
           <div class="form-group">
             <label for="body">Body</label>
             <textarea id="body" name="body" class="form-control"
-              value="{{old('body')}}" required></textarea>
+              value="{{$curBody}}" required></textarea>
           </div>
 
           <div class="form-group">

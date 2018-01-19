@@ -1,4 +1,4 @@
-/*  have to make in Laravel
+/*  have to make in Laravel: npm run dev
  * Globals
  */
 
@@ -175,6 +175,26 @@ h6,
 
 .blog-footer p:last-child {
   margin-bottom: 0;
+}
+
+/*
+MB Added
+*/
+
+div.tag-item {
+  width: 70%;
+  margin-left: 10%;
+}
+
+.clearfix::after {
+  content: "";
+  clear: both;
+  display: table;
+}
+
+span.tag-item {
+  float: left;
+  margin-right: 2em;
 }
 
 #mbflash-message {

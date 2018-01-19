@@ -9,7 +9,7 @@
 //
 </script -->
     <div class="col-sm-8 blog-main">
-        <h1>Create a new tag</h1>
+        <h1>Create a new tag (*DEBUG* create post session title: {{ $title }} )</h1>
 
         <hr>
         <!-- TODO: rework this tag create
