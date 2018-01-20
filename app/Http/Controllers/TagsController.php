@@ -27,21 +27,21 @@ class TagsController extends Controller
         $form_type = 'Tag';
       
         $title = Input::get('title') ?: '';
-        session(['postTitle', $title]); // or $request->session()->put('postTitle', $title);
+        $request->session()->put('postTitle', $title); // did NOT work: session(['postTitle', $title]); 
         $body = Input::get('body') ?: '';
-        session(['postBody', $body]);
+        $request->session()->put('postBody', $body);
+        // TODO: test without below
+        session()->save();  // ??***??? is this important ??????????????
         
         return view('tags.create', compact('tags', 'form_type', 'title', 'body'));
     }
     
     public function store() {
-        $title = session('postTitle', '');
-        $body = session('postBody', '');
-
-        session(['postTitle', $title]);
-        session(['postBody', $body]);
+        /* DONT NEED *** $title = session('postTitle', '');
+        $body = session('postBody', ''); *** DELETE */
         
-        // TODO: ** Turn BACK ON -- Create new Tag ****
+        
+        // TODO: ** Turn BACK ON! -- Create new Tag ****
         // Validation
         /* $this->validate(request(), [
             'name' => 'required|min:2|max:20',
@@ -55,6 +55,6 @@ class TagsController extends Controller
         // redirect to back to caller (post/create)
         // Note 1/18: may be able to reload parent via javascript see notes if endtered data disappears
         
-        return redirect('/posts/create')->with('title', $title); // compact('title', 'body') //  return back(); // -- but need to restorePreviousContent');
+        return redirect('/posts/create'); 
     }
 }

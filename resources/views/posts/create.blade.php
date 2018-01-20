@@ -4,6 +4,8 @@
 <script type="text/javascript">
 
 	function retrievTitleNOpenTagsForm() {
+/* TODO: testing if need js since loading php ????? */
+		/*
 		// purpose is to set tile (and body) (?to session) to repopulate fields after new tag added 1/18 
 		$postTitle = document.postCreateForm.elements["title"].value;
 		$postBody = document.postCreateForm.elements["body"].value;
@@ -11,13 +13,14 @@
 		
 
 		// set title if given
-		if ($postTitle) { //  || ((typeof $title) == undefined) || ($title == undefined) || ($title == null) || ($title == "")
+		if ($postTitle) { // ***Not these?:  || ((typeof $title) == undefined) || ($title == undefined) 
+							//  ***Not these?:  || ($title == null) || ($title == "")
 			sessionStorage.setItem("postTitle", $postTitle);
 		}
 
-		if ($postBody) { //  || ((typeof $title) == undefined) || ($title == undefined) || ($title == null) || ($title == "")
+		if ($postBody) {
 			sessionStorage.setItem("postBody", $postBody);
-		}
+		} */
 		
 		// window.open('/tags/create');  -- instead we POST to tags/create route
 		document.postCreateForm.method = "get";  // want to open (web.php) Route::get('/tags/create', 'TagsController@create'); 
@@ -39,11 +42,11 @@
           {{ csrf_field() }}
 
 		  @php
-		  	$curBody = session('postBody', 'empty') ?: (session('postBody') ?: old('body'));
+		  	$curBody = session('postBody', '') ?: (session('postBody') ?: old('body'));
 		  	// **???*** if (isset(_SESSION["postBody"])) { $curBody = _SESSION["postBody"]; }
 		  	$curTitle = session('postTitle', '') ?: (session('postTitle') ?: old('title'));  
 		  	// ***Use in title body tag below
-		  	session()->forget('postTitle'); // clear
+		  	session()->forget('postTitle'); // clear old to get new field val if we leave the page
 		  	session()->forget('postBody');
 		  @endphp
           <div class="form-group">
@@ -77,7 +80,8 @@
           <div class="form-group">
             <label for="body">Body</label>
             <textarea id="body" name="body" class="form-control"
-              value="{{$curBody}}" required></textarea>
+               required>
+               {{$curBody}}</textarea> 
           </div>
 
           <div class="form-group">
