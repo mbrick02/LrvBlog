@@ -42,17 +42,16 @@
           {{ csrf_field() }}
 
 		  @php
-		  	$curBody = session('postBody', '') ?: (session('postBody') ?: old('body'));
-		  	// **???*** if (isset(_SESSION["postBody"])) { $curBody = _SESSION["postBody"]; }
-		  	$curTitle = session('postTitle', '') ?: (session('postTitle') ?: old('title'));  
-		  	// ***Use in title body tag below
+		  	$restoreBody = session('postBody', '') ?: (session('postBody') ?: old('body'));
+		  	$restoreTitle = session('postTitle', '') ?: (session('postTitle') ?: old('title'));  
+		  	
 		  	session()->forget('postTitle'); // clear old to get new field val if we leave the page
 		  	session()->forget('postBody');
 		  @endphp
           <div class="form-group">
-            <label for="title">Title {{ Session::has('postTitle') ? Session::get('postTitle') : '*Debug* No Session post Title' }}</label>
+            <label for="title">Title:</label>
             <input type="text" class="form-control" id="title" placeholder="Title"
-            name="title" value="{{$curTitle}}" required>
+            name="title" value="{{$restoreTitle}}" required>
           </div>
           <div class="form-group">
             <div class="tag-cloud">
@@ -78,10 +77,10 @@
           </div>
 
           <div class="form-group">
-            <label for="body">Body</label>
+            <label for="body">Body:</label>
             <textarea id="body" name="body" class="form-control"
                required>
-               {{$curBody}}</textarea> 
+               {{$restoreBody}}</textarea> 
           </div>
 
           <div class="form-group">

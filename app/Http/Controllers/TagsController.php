@@ -37,23 +37,14 @@ class TagsController extends Controller
     }
     
     public function store() {
-        /* DONT NEED *** $title = session('postTitle', '');
-        $body = session('postBody', ''); *** DELETE */
-        
-        
-        // TODO: ** Turn BACK ON! -- Create new Tag ****
         // Validation
-        /* $this->validate(request(), [
+        $this->validate(request(), [
             'name' => 'required|min:2|max:20',
         ]);
         
         Tag::create([
           'name' => request('name'),
-        ]); */
-        // TODO after store, return to posts/create(.blade.php) 
-        //         ? with session content of post create form for reopening
-        // redirect to back to caller (post/create)
-        // Note 1/18: may be able to reload parent via javascript see notes if endtered data disappears
+        ]);
         
         return redirect('/posts/create'); 
     }
