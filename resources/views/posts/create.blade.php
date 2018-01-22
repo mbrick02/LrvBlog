@@ -3,30 +3,11 @@
 @section('content')
 <script type="text/javascript">
 
-	function retrievTitleNOpenTagsForm() {
-/* TODO: testing if need js since loading php ????? */
-		/*
-		// purpose is to set tile (and body) (?to session) to repopulate fields after new tag added 1/18 
-		$postTitle = document.postCreateForm.elements["title"].value;
-		$postBody = document.postCreateForm.elements["body"].value;
-		
-		
-
-		// set title if given
-		if ($postTitle) { // ***Not these?:  || ((typeof $title) == undefined) || ($title == undefined) 
-							//  ***Not these?:  || ($title == null) || ($title == "")
-			sessionStorage.setItem("postTitle", $postTitle);
-		}
-
-		if ($postBody) {
-			sessionStorage.setItem("postBody", $postBody);
-		} */
-		
+	function retrievTitleNOpenTagsForm() {		
 		// window.open('/tags/create');  -- instead we POST to tags/create route
 		document.postCreateForm.method = "get";  // want to open (web.php) Route::get('/tags/create', 'TagsController@create'); 
 		document.postCreateForm.action ="/tags/create";
 		document.postCreateForm.submit();
-		
 		
 		return true;
 	}
