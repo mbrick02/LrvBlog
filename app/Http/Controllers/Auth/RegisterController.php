@@ -64,6 +64,10 @@ class RegisterController extends Controller
     {
         return User::create([
             'name' => $data['name'],
+            // TODO: (Change DB 1ST!!!!), DEL name (keep in DB for now), ADD username, fname and lname
+            // 'username' => $data['username'],
+            // 'fname' => $data['fname'],
+            // 'lname' => $data['lname'],
             'email' => $data['email'],
             'password' => bcrypt($data['password']),
         ]);

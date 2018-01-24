@@ -10,7 +10,7 @@
           {{ csrf_field() }}
 
           <div class="form-group">
-            <label for="tagName">New Tag</label>
+            <label for="tagName">New Tag:</label>
             <input type="text" class="form-control" id="newTag" placeholder="New Tag Name"
             name="name" value="{{old('newTag')}}" required>
           </div>

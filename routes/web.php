@@ -35,8 +35,6 @@ Route::post('/register', 'RegistrationController@store');
 
 Route::get('/tags/create', 'TagsController@create');
 Route::post('/tags/create', 'TagsController@store');
-// TODO set up TagsController@create 
-/* @todo set up TagsController@create */
 
 Route::get('/login', 'SessionsController@create')->name('login');
 Route::post('/login', 'SessionsController@store');
