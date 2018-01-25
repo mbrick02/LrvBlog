@@ -22,7 +22,6 @@ class TagsController extends Controller
     
     
     public function create(Request $request) {
-        // TODO: send to tag create form
         $tags = Tag::orderBy('name', 'desc')->get(); // ??may not list all tags if form adds a new tag??
         $form_type = 'Tag';
       

@@ -64,7 +64,8 @@ class RegisterController extends Controller
     {
         return User::create([
             'name' => $data['name'],
-            // TODO: (Change DB 1ST!!!!), DEL name (keep in DB for now), ADD username, fname and lname
+            // TODO: (Change DB 1ST!!!! or remigrate with empty user table), 
+            //          DEL name (keep in DB for now), ADD username, fname and lname
             // 'username' => $data['username'],
             // 'fname' => $data['fname'],
             // 'lname' => $data['lname'],
