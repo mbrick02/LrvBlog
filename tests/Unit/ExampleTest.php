@@ -10,7 +10,7 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class ExampleTest extends TestCase
 {
-  use DatabaseTransactions;
+  use DatabaseTransactions;  // rollback transactions after test
 
     /**
      * A basic test example.
