@@ -7,7 +7,7 @@
         <a class="nav-link" href="#">New hires</a>
         <a class="nav-link" href="#">About</a>
         @if (Auth::check())
-          <a class="nav-link ml-auto" href="#">{{ Auth::user()->name }}</a>
+          <a class="nav-link ml-auto" href="#">{{ Auth::user()->fname }} {{ Auth::user()->lname }}</a>
           <!-- ml=margin left -->
         @endif
       </nav>
