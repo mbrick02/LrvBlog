@@ -27,7 +27,9 @@ class RegistrationForm extends FormRequest
     public function rules()
     {
         return [
-          'name' => 'required',
+          'username' => 'required',
+          'fname' => 'required',
+          'lname' => 'required',
           'email' => 'required|email',
           'password' => 'required|confirmed'
         ];
@@ -38,9 +40,10 @@ class RegistrationForm extends FormRequest
       //  Create and save the user.
       // obj. is req., so use below: $user = User::create(request(['name', 'email', 'password']));
       // note: request([]) = request()->only([])
-      // was (password not encrypted) 11/18/17: $user = User::create($this->only(['name', 'email', 'password']));
       $user = User::create([
-        'name' => $this->get('name'),
+        'username' => $this->get('username'),
+        'fname' => $this->get('fname'),
+        'lname' => $this->get('lname'),
         'email' => $this->get('email'),
         'password' => Hash::make($this->get('password')) // same as bcrypt()?
       ]);

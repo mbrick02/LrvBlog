@@ -7,9 +7,16 @@
 
   <form method="POST" action="/login">
     {{ csrf_field() }}
-
     <div class="form-group">
-      <label for="email">Email:</label>
+    <h1>Username Or Email</h1>
+    </div>
+    
+    <div class="form-group">
+      <label for="email">Username (Or):</label>
+      <input type="email" class="form-control" id="username" name="username" required />
+    </div>
+    <div class="form-group">
+      <label for="email">(Or) Email:</label>
       <input type="email" class="form-control" id="email" name="email" required />
     </div>
     <div class="form-group">
