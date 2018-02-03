@@ -45,7 +45,7 @@ class RegistrationForm extends FormRequest
         'fname' => $this->get('fname'),
         'lname' => $this->get('lname'),
         'email' => $this->get('email'),
-        'password' => Hash::make($this->get('password')) // same as bcrypt()?
+        'password' => \Hash::make($this->get('password')) // same as bcrypt()?
       ]);
 
 /* ??? this is from /app/Http/Controllers/Auth/RegisterController:

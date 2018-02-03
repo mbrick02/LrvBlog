@@ -12,13 +12,13 @@
     </div>
     
     <div class="form-group">
-      <label for="email">Username (Or):</label>
-      <input type="email" class="form-control" id="username" name="username" required />
+      <label for="login">Username or Email:</label> <!-- was username followed by email -->
+      <input type="text" class="form-control" id="login" name="login" required />
     </div>
-    <div class="form-group">
+    <!--  <div class="form-group">
       <label for="email">(Or) Email:</label>
       <input type="email" class="form-control" id="email" name="email" required />
-    </div>
+    </div> -->
     <div class="form-group">
       <label for="password">Password:</label>
       <input type="password" class="form-control" id="password" name="password" required />

@@ -16,11 +16,19 @@ class SessionsController extends Controller
   }
 
   public function store() {
-    $lookupFld = 'email';
-    $lookupFld2 = 'username';
-    $mbAuth = false;
+    $field = filter_var(request()->input('login'), FILTER_VALIDATE_EMAIL) ? 'email' : 'username';
+    
+    $this->validate(request(), [
+        'login' => 'required',
+        'password' => 'required'
+    ]);
+    
+    // TODO: have login option on username or email
+    request()->merge([$field => request()->input('login')]);  // create a request field based on wheter email or login
+    
+    // TODO: DELETE should be unusede now: $mbAuth = false;
     // Attempt to authenticate the user by email or username, and password
-    if((!auth()->attempt(request([$lookupFld, 'password']))) && (!auth()->attempt(request([$lookupFld2, 'password'])))) {
+    if(!auth()->attempt(request([$field, 'password']))) {
         // If neither works, redirect back.
         return back()->withErrors([
           'message' => 'Please check credentials and try again.'
