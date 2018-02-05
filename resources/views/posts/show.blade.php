@@ -3,9 +3,9 @@
 @section('content')
 <script type="text/javascript">
 
-	function xxxxletUserEditPostxxxx___retrievTitleNOpenTagsForm() {		
+	function letUserEditPost() {		
 		// window.open('/tags/create');  -- instead we POST to tags/create route
-		document.showEditForm.method = "getORPatch"; 
+		document.showEditForm.method = "get"; 
 		 // TODO: want to open (web.php) Route::get('/tags/create', 'TagsController@create'); 
 		document.showEditForm.action ="/post/edit";
 		document.showEditForm.submit();
