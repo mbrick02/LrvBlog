@@ -6,8 +6,8 @@
 	function letUserEditPost() {		
 		// window.open('/tags/create');  -- instead we POST to tags/create route
 		document.showEditForm.method = "get"; 
-		 // TODO: want to open (web.php) Route::get('/tags/create', 'TagsController@create'); 
-		document.showEditForm.action ="/post/edit";
+		 // TODO: want to open (web.php) Route::get('/posts/edit', 'PostsController@edit'); 
+		document.showEditForm.action ="/posts/edit";
 		document.showEditForm.submit();
 		
 		return true;

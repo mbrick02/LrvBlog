@@ -31,6 +31,7 @@ Route::post('/posts/{post}/comments', 'CommentsController@store');
    // as new controller w/common action name (or could have added: 'PostController@storeComment')
    
    // TODO at some point, I need to ADD edit forms for user, post (?and tags?)
+Route::patch('/posts/edit', 'PostsController@edit');
 
 Route::get('/register', 'RegistrationController@create');
 Route::post('/register', 'RegistrationController@store');
