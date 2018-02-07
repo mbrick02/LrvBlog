@@ -44,7 +44,7 @@
     {{-- Add a comment if auth/logged-in --}}
     <div class="card"> <!-- twitter bootstrap 4 class -->
       <div class="card-block">
-        <form method="POST" action="/posts/{{ $post->id }}/comments" name="letUserEditPost">
+        <form method="POST" action="/posts/{{ $post->id }}/comments" name="showEditForm">
           {{ csrf_field() }}
           <div class="form-group">
             <textarea name="body" placeholder="Your comment here"
@@ -54,7 +54,7 @@
             <button type="submit" class="btn btn-primary">Add Comment</button>
             @if (($post->user->id) == (auth()->user()->id))
             	<!-- let author edit post -->
-            	<button type="button" class="btn btn-primary" id="editBtn">Edit Post</button>
+            	<button type="button" class="btn btn-primary" onClick="return letUserEditPost();" id="editBtn">Edit Post</button>
             @endif
           </div>
         </form>
