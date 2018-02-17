@@ -1,4 +1,3 @@
-<?php
 @extends('layouts.master')
 
 @section('content')
@@ -24,13 +23,29 @@ NOT AN HTML COMMENT REMOVE ****** // ***************************************
     <fieldset class="tag-cloud">
     <legend class="tag-cloud">Tags to group by</legend>
     <div class="tag-item clearfix">
-    @foreach ($tags as $tag)  ****NEED TO ADD SOME FORM OF IF POST_TAG CHECKED THEN CHECK ******
+    
+  <!-- /* // TODO: test for existing tags 2/16/18
+    	 @if (count($post->tags)) // *** or $post->tags->count() ?? >0 ???
+  			
+    		@foreach ($post->tags as $setTag)
+    			@php
+    				array_push($postTags[], $setTag->name;
+    			@endphp
+    		@endforeach
+    		
+    	@endif */  -->
+    
+    @foreach ($tags as $tag)
         <span class="tag-item">
         <input type="checkbox" name="tags[]" value="{{$tag->name}}"
-        id="{{$tag->name}}">
+        id="{{$tag->name}}"
+			@if (in_array($tag->name, $postTags)) {{-- check if already in post-tags --}}
+			 checked
+			@endif
+        >
         <label for="{{$tag->name}}">{{$tag->name}}</label>
         </span>
-        @endforeach
+     @endforeach
         </div>
         </fieldset>
         <fieldset class="tag-button">

@@ -34,8 +34,8 @@ class PostsController extends Controller
     }
 
     public function edit(Post $post) {
-            return view('posts.edit', compact('post'));
-        
+    	$tags = Tag::orderBy('name', 'asc')->get();
+        return view('posts.edit', compact('post'), compact('tags'));
     }
     
     public function create() {
@@ -52,6 +52,9 @@ class PostsController extends Controller
 
       // TODO: store checked tags
       // $tagsChecked = $request->input('tagCheckboxArrayChecked???NOTSURE***');
+      // Note: in posts/create.blade.php, the "tags" checkboxes are named "tags[]" 
+      // so $request should have the checked values in that array so ...
+      //  ??... foreach ($request->tags[] as $tag) { $post->tags()->attach($tag); } ...** 
       
       // refactor designating post by user rather than Post::create
       auth()->user()->publish(
