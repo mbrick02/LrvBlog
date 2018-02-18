@@ -3,11 +3,11 @@
 @section('content')
 <script type="text/javascript">
 
-	function letUserEditPost() {		
+	function letUserEditPost(postID) {		
 		// window.open('/tags/create');  -- instead we POST to tags/create route
 		document.showEditForm.method = "get"; 
 		 // TODO: want to open (web.php) Route::get('/posts/edit', 'PostsController@edit'); 
-		document.showEditForm.action ="/posts/edit";
+		document.showEditForm.action ="/posts/" + postID + "/edit";
 		document.showEditForm.submit();
 		
 		return true;
@@ -54,7 +54,8 @@
             <button type="submit" class="btn btn-primary">Add Comment</button>
             @if (($post->user->id) == (auth()->user()->id))
             	<!-- let author edit post -->
-            	<button type="button" class="btn btn-primary" onClick="return letUserEditPost();" id="editBtn">Edit Post</button>
+            	<button type="button" class="btn btn-primary" onClick="return letUserEditPost({{ $post->id }});" 
+            	id="editBtn">Edit Post</button>
             @endif
           </div>
         </form>

@@ -8,7 +8,7 @@
 <hr>
 // ***************Based on combo of Create view/posts/create.blade.php &  show.blade.php (see below *****...) 
 NOT AN HTML COMMENT REMOVE ****** // ***************************************
-<form method="POST" action="/posts" name="postEditForm">
+<form method="POST" action="/posts/{{ $post->id }}/edit" name="postEditForm">
 {{ method_field('PATCH') }} 
 {{ csrf_field() }}
 
@@ -24,22 +24,21 @@ NOT AN HTML COMMENT REMOVE ****** // ***************************************
     <legend class="tag-cloud">Tags to group by</legend>
     <div class="tag-item clearfix">
     
-  <!-- /* // TODO: test for existing tags 2/16/18
-    	 @if (count($post->tags)) // *** or $post->tags->count() ?? >0 ???
-  			
-    		@foreach ($post->tags as $setTag)
-    			@php
-    				array_push($postTags[], $setTag->name;
-    			@endphp
-    		@endforeach
-    		
-    	@endif */  -->
+ 	{{-- TODO: test for existing tags 2/16/18 --}}
+    @if (count($post->tags)) // *** or $post->tags->count() ?? >0 ???
+  		@php	$postTags = array(); @endphp
+    	@foreach ($post->tags as $setTag)
+    		@php
+    			array_push($postTags, $setTag->name);
+    		@endphp
+    	@endforeach		
+    @endif
     
     @foreach ($tags as $tag)
         <span class="tag-item">
         <input type="checkbox" name="tags[]" value="{{$tag->name}}"
         id="{{$tag->name}}"
-			@if (in_array($tag->name, $postTags)) {{-- check if already in post-tags --}}
+			@if (isset($postTags) && (in_array($tag->name, $postTags))) {{-- check if already in post-tags --}}
 			 checked
 			@endif
         >
@@ -52,7 +51,7 @@ NOT AN HTML COMMENT REMOVE ****** // ***************************************
         <!-- button to open tag create form holding form info in session var -->
         <button class="button" type="button"
             onClick="return retrievTitleNOpenTagsForm();">
-            <span class="icon">Create New Tag</span></button>
+            <span class="icon">Update Tag</span></button>
             </fieldset>
             </div>
             </div>
