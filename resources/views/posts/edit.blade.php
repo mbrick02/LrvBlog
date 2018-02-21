@@ -51,7 +51,7 @@ NOT AN HTML COMMENT REMOVE ****** // ***************************************
         <!-- button to open tag create form holding form info in session var -->
         <button class="button" type="button"
             onClick="return retrievTitleNOpenTagsForm();">
-            <span class="icon">Update Tag</span></button>
+            <span class="icon">Add Tags</span></button>
             </fieldset>
             </div>
             </div>
@@ -64,7 +64,7 @@ NOT AN HTML COMMENT REMOVE ****** // ***************************************
             </div>
             
             <div class="form-group">
-            <button type="submit" class="btn btn-primary">Publish</button>
+            <button type="submit" class="btn btn-primary">Update</button>
             </div>
         @include('layouts.errors')
         </form>
