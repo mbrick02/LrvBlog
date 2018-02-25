@@ -23,7 +23,7 @@ class TagsController extends Controller
     
     public function create(Request $request) {
         $tags = Tag::orderBy('name', 'desc')->get(); // ??may not list all tags if form adds a new tag??
-        $form_type = 'Tag';
+        $form_type = $request->form_type;
       
         $title = Input::get('title') ?: '';
         $request->session()->put('postTitle', $title); // did NOT work: session(['postTitle', $title]); 
@@ -44,7 +44,8 @@ class TagsController extends Controller
         Tag::create([
           'name' => request('name'),
         ]);
-        
+        // TODO: if (post/edit) { return redirect('posts/edit'); } else {
+        // ... editPostForm vs createPostForm
         return redirect('/posts/create'); 
     }
 }

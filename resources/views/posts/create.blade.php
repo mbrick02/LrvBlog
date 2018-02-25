@@ -30,6 +30,7 @@
 		  	session()->forget('postBody');
 		  @endphp
           <div class="form-group">
+          	<input type="hidden" name="form_type" value="createPostForm">
             <label for="title">Title:</label>
             <input type="text" class="form-control" id="title" placeholder="Title"
             name="title" value="{{$restoreTitle}}" required>

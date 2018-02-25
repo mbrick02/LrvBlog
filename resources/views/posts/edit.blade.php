@@ -1,7 +1,17 @@
 @extends('layouts.master')
 
 @section('content')
+<script type="text/javascript">
 
+	function retrievTitleNOpenTagsForm() {
+		document.postEditForm.method = "get";  // want to open (web.php) Route::get('/tags/create', 'TagsController@create'); 
+		document.postEditForm.action ="/tags/create";
+		document.postEditForm.submit();
+		
+		return true;
+	}
+//
+</script>
 <div class="col-sm-8 blog-main">
 <h1>Edit a Post</h1>
 
@@ -14,6 +24,7 @@ NOT AN HTML COMMENT REMOVE ****** // ***************************************
 
 
 <div class="form-group">
+<input type="hidden" name="form_type" value="editPostForm">
 <label for="title">Title:</label>
 <input type="text" class="form-control" id="title" placeholder="Title"
     name="title" value="{{ $post->title }}" required>
@@ -23,7 +34,7 @@ NOT AN HTML COMMENT REMOVE ****** // ***************************************
     <fieldset class="tag-cloud">
     <legend class="tag-cloud">Tags to group by</legend>
     <div class="tag-item clearfix">
-    
+   
  	{{-- TODO: test for existing tags 2/16/18 --}}
     @if (count($post->tags)) // *** or $post->tags->count() ?? >0 ???
   		@php	$postTags = array(); @endphp
@@ -33,6 +44,14 @@ NOT AN HTML COMMENT REMOVE ****** // ***************************************
     		@endphp
     	@endforeach		
     @endif
+    
+    @php
+	  	$restoreBody = session('postBody', '') ?: (session('postBody') ?: old('body'));
+	  	$restoreTitle = session('postTitle', '') ?: (session('postTitle') ?: old('title'));  
+	  	
+	  	session()->forget('postTitle'); // clear old to get new field val if we leave the page
+	  	session()->forget('postBody');
+	@endphp
     
     @foreach ($tags as $tag)
         <span class="tag-item">
@@ -70,71 +89,3 @@ NOT AN HTML COMMENT REMOVE ****** // ***************************************
         </form>
     </div>
 @endsection
-
-NOT AN HTML COMMENT REMOVE ****** // ***************************************
-NOT AN HTML COMMENT REMOVE *** *** // ****************** OLD SHOW.BLADE.PHP
-
-@extends('layouts.master')
-
-@section('content')
-
-<div class="col-sm-8 blog-main">
-xxxTITLE SHOULD BE DONE ****XXXX<h1>{{ $post->title }} by {{ $post->user->fname }} {{ $post->user->lname }}</h1>
-<h2>by {{ $post->user->fname }} {{ $post->user->lname }}</h2>
-
-@if (count($post->tags))
-    <ul>
-    @foreach ($post->tags as $tag)
-        <li><a href="/posts/tags/{{$tag->name}}">{{$tag->name }}</a></li>
-        @endforeach
-        </ul>
-        @endif
-        
-*****BODY SHOULD BE DONE****XXXX        {{$post->body}}
-        <hr />
-   ****SHOULDNT NEED COMMENTS FOR THE EDIT     
-        <div class="comments">
-        <h2>Comments:</h2>
-        <ul class="list-group">
-        @foreach ($post->comments as $comment)
-            <li class="list-group-item">
-            <strong>{{ $comment->created_at->diffForHumans() }}:</strong> &nbsp;
-            {{$comment->body }}</li>
-            @endforeach
-            </ul>
-            </div>
-            
-            @if (Auth::check())
-            {{-- Add a comment if auth/logged-in --}}
-            <div class="card"> <!-- twitter bootstrap 4 class -->
-            <div class="card-block">
-            <form method="POST" action="/posts/{{ $post->id }}/comments" name="letUserEditPost">
-            {{ csrf_field() }}
-            <div class="form-group">
-            <textarea name="body" placeholder="Your comment here"
-                class="form-control" required></textarea>
-                </div>
-                <div class="form-group">
-                <button type="submit" class="btn btn-primary">Add Comment</button>
-                @if (($post->user->id) == (auth()->user()->id))
-                    <!-- let author edit post -->
-                    <button type="button" class="btn btn-primary" id="editBtn">Edit Post</button>
-                    @endif
-                    </div>
-                    </form>
-                    
-                    @include('layouts.errors')
-                    </div>
-                    </div>
-                    @endif
-                    
-                    </div>
-                    @endsection
-REMOVE NOT AN HTML COMMENT *** // ****************** END OLD SHOW.BLADE.PHP
-
-
-
-
-                
-                
-                
