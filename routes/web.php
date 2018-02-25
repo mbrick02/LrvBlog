@@ -31,6 +31,7 @@ Route::post('/posts/{post}/comments', 'CommentsController@store');
    // as new controller w/common action name (or could have added: 'PostController@storeComment')
    
    // TODO at some point, I need to ADD edit forms for user, post (?and tags?)
+   		// STARTING WITH edit for post
 Route::get('/posts/{post}/edit', 'PostsController@edit');
 Route::patch('/posts/{post}/edit', 'PostsController@patch');
 
@@ -38,6 +39,8 @@ Route::get('/register', 'RegistrationController@create');
 Route::post('/register', 'RegistrationController@store');
 
 Route::get('/tags/create', 'TagsController@create');
+// TODO: 
+// 8/24 8:46P -- Route::get('/tags/{post}/edit', 'TagsController@edit');
 Route::post('/tags/create', 'TagsController@store');
 
 Route::get('/login', 'SessionsController@create')->name('login');
