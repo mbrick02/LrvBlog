@@ -5,7 +5,7 @@
 
 	function retrievTitleNOpenTagsForm() {
 		document.postEditForm.method = "get";  // want to open (web.php) Route::get('/tags/create', 'TagsController@create'); 
-		document.postEditForm.action ="/tags/create";
+		document.postEditForm.action ="/tags/{post}/create";
 		document.postEditForm.submit();
 		
 		return true;

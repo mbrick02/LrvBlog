@@ -35,6 +35,20 @@ class TagsController extends Controller
         return view('tags.create', compact('tags', 'form_type', 'title', 'body'));
     }
     
+    public function createWPost(Request $request, Post $post){ // *** better name createFromEditPost ???
+    	$tags = Tag::orderBy('name', 'desc')->get(); // ??may not list all tags if form adds a new tag??
+    	$form_type = $request->form_type;
+    	
+    	$title = Input::get('title') ?: '';
+    	$request->session()->put('postTitle', $title); // did NOT work: session(['postTitle', $title]);
+    	$body = Input::get('body') ?: '';
+    	$request->session()->put('postBody', $body);
+    	// TODO: test without below
+    	session()->save();  // ??***??? is this important ??????????????
+    	
+    	return view('tags.create', compact('tags', 'form_type', 'title', 'body', 'post')); // post probably wont work as is
+    }
+    
     public function store() {
         // Validation
         $this->validate(request(), [

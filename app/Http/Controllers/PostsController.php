@@ -32,15 +32,15 @@ class PostsController extends Controller
       return view('posts.show', compact('post'));
       // like return view('posts.index')->with('posts', $posts);
     }
-
+    
+    public function create() {
+    	$tags = Tag::orderBy('name', 'asc')->get();
+    	return view('posts.create', compact('tags'));
+    }
+    
     public function edit(Post $post) {
     	$tags = Tag::orderBy('name', 'asc')->get();
         return view('posts.edit', compact('post'), compact('tags'));
-    }
-    
-    public function create() {
-      $tags = Tag::orderBy('name', 'asc')->get();
-      return view('posts.create', compact('tags'));
     }
 
     public function store() {
