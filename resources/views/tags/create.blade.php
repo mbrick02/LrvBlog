@@ -5,7 +5,13 @@
         <h1>Create a new tag</h1>
 
         <hr>
-        <form method="POST" action="/tags/create">
+        <form method="POST" 
+        @if (! empty($postid))
+        	action = "/tags/{{ $postid }}/create"
+        @else
+        	action="/tags/create"
+       	@endif
+        	>
 
           {{ csrf_field() }}
 

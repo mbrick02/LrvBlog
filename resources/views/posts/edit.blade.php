@@ -3,9 +3,9 @@
 @section('content')
 <script type="text/javascript">
 
-	function retrievTitleNOpenTagsForm() {
+	function openTagsForm() {
 		document.postEditForm.method = "get";  // want to open (web.php) Route::get('/tags/create', 'TagsController@create'); 
-		document.postEditForm.action ="/tags/{post}/create";
+		document.postEditForm.action ="/tags/{{ $post->id }}/create";
 		document.postEditForm.submit();
 		
 		return true;
@@ -19,15 +19,21 @@
 // ***************Based on combo of Create view/posts/create.blade.php &  show.blade.php (see below *****...) 
 NOT AN HTML COMMENT REMOVE ****** // ***************************************
 <form method="POST" action="/posts/{{ $post->id }}/edit" name="postEditForm">
-{{ method_field('PATCH') }} 
 {{ csrf_field() }}
-
+{{ method_field('PATCH') }} 
+@php
+  $restoreBody = session('postBody', '') ?: (session('postBody') ?: $post->body);
+  $restoreTitle = session('postTitle', '') ?: (session('postTitle') ?: $post->title);  
+  	
+  session()->forget('postTitle'); // clear old to get new field val if we leave the page
+  session()->forget('postBody');
+@endphp
 
 <div class="form-group">
 <input type="hidden" name="form_type" value="editPostForm">
 <label for="title">Title:</label>
 <input type="text" class="form-control" id="title" placeholder="Title"
-    name="title" value="{{ $post->title }}" required>
+    name="title" value="{{ $restoreTitle }}" required>
     </div>
     <div class="form-group">
     <div class="tag-cloud">
@@ -45,14 +51,6 @@ NOT AN HTML COMMENT REMOVE ****** // ***************************************
     	@endforeach		
     @endif
     
-    @php
-	  	$restoreBody = session('postBody', '') ?: (session('postBody') ?: old('body'));
-	  	$restoreTitle = session('postTitle', '') ?: (session('postTitle') ?: old('title'));  
-	  	
-	  	session()->forget('postTitle'); // clear old to get new field val if we leave the page
-	  	session()->forget('postBody');
-	@endphp
-    
     @foreach ($tags as $tag)
         <span class="tag-item">
         <input type="checkbox" name="tags[]" value="{{$tag->name}}"
@@ -69,7 +67,7 @@ NOT AN HTML COMMENT REMOVE ****** // ***************************************
         <fieldset class="tag-button">
         <!-- button to open tag create form holding form info in session var -->
         <button class="button" type="button"
-            onClick="return retrievTitleNOpenTagsForm();">
+            onClick="return openTagsForm();">
             <span class="icon">Add Tags</span></button>
             </fieldset>
             </div>
@@ -79,7 +77,7 @@ NOT AN HTML COMMENT REMOVE ****** // ***************************************
             <label for="body">Body:</label>
             <textarea id="body" name="body" class="form-control"
                 required>
-                {{$post->body}}</textarea>
+                {{$restoreBody}}</textarea>
             </div>
             
             <div class="form-group">

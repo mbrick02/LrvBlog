@@ -3,7 +3,7 @@
 @section('content')
 <script type="text/javascript">
 
-	function retrievTitleNOpenTagsForm() {		
+	function openTagsForm() {		
 		// window.open('/tags/create');  -- instead we POST to tags/create route
 		document.postCreateForm.method = "get";  // want to open (web.php) Route::get('/tags/create', 'TagsController@create'); 
 		document.postCreateForm.action ="/tags/create";
@@ -52,7 +52,7 @@
               <fieldset class="tag-button">
               	<!-- button to open tag create form holding form info in session var -->
               	<button class="button" type="button" 
-              	onClick="return retrievTitleNOpenTagsForm();">
+              	onClick="return openTagsForm();">
               	<span class="icon">Create New Tag</span></button>
               </fieldset>
             </div>

@@ -41,9 +41,8 @@ Route::post('/register', 'RegistrationController@store');
 Route::get('/tags/create', 'TagsController@create');
 Route::get('/tags/{post}/create', 'TagsController@createWPost');
 
-// TODO: 
-// 8/24 8:46P -- Route::get('/tags/{post}/edit', 'TagsController@edit');
 Route::post('/tags/create', 'TagsController@store');
+Route::post('/tags/{post}/edit', 'TagsController@storeWPost');
 
 Route::get('/login', 'SessionsController@create')->name('login');
 Route::post('/login', 'SessionsController@store');

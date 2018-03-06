@@ -66,4 +66,30 @@ class PostsController extends Controller
       // redirect to home page
       return redirect('/');
     }
+    
+    public function patch(Post $post) {
+        // Validation
+        $this->validate(request(), [
+            'title' => 'required|min:2',
+            'body' => 'required|min:2'
+        ]);
+        
+        // TODO: store checked tags
+        // $tagsChecked = $request->input('tagCheckboxArrayChecked???NOTSURE***');
+        // Note: in posts/create.blade.php, the "tags" checkboxes are named "tags[]"
+        // so $request should have the checked values in that array so ...
+        //  ??... foreach ($request->tags[] as $tag) { if(NotPostTag) { $post->tags()->attach($tag); } } ...**
+        // e.g.:  "tags" => array[ 0 => "Ascension" ]
+        
+        $postUpdate = Post::find($post->id);
+        $post->title = request(['title']);
+        $post->body = request(['body']);
+        $post->update();
+      
+        
+        session()->flash('message', 'Your post has now been updated.');
+        
+        // redirect to home page
+        return redirect('/');
+    }
 }

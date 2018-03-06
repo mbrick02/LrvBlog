@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 use App\Tag;
+use App\Post;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Input;
 
@@ -45,8 +46,9 @@ class TagsController extends Controller
     	$request->session()->put('postBody', $body);
     	// TODO: test without below
     	session()->save();  // ??***??? is this important ??????????????
+    	$postid = $post->id;
     	
-    	return view('tags.create', compact('tags', 'form_type', 'title', 'body', 'post')); // post probably wont work as is
+    	return view('tags.create', compact('tags', 'form_type', 'title', 'body', 'postid'));
     }
     
     public function store() {
@@ -55,11 +57,27 @@ class TagsController extends Controller
             'name' => 'required|min:2|max:20',
         ]);
         
+        // TODO: may verify name does not already exist to avoid db error/blowup
         Tag::create([
           'name' => request('name'),
         ]);
         // TODO: if (post/edit) { return redirect('posts/edit'); } else {
         // ... editPostForm vs createPostForm
         return redirect('/posts/create'); 
+    }
+    
+    public function storeWPost(Post $post) {
+        // Validation
+        $this->validate(request(), [
+            'name' => 'required|min:2|max:20',
+        ]);
+        
+        // TODO: may verify name does not already exist to avoid db error/blowup
+        Tag::create([
+            'name' => request('name'),
+        ]);
+        // TODO: if (post/edit) { return redirect('posts/edit'); } else {
+        // ... editPostForm vs createPostForm
+        return redirect('/posts/{post}/edit');
     }
 }
