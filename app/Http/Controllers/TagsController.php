@@ -24,7 +24,7 @@ class TagsController extends Controller
     
     public function create(Request $request) {
         $tags = Tag::orderBy('name', 'desc')->get(); // ??may not list all tags if form adds a new tag??
-        $form_type = $request->form_type;
+        // DEL 3/7/18 cut $form_type = $request->form_type;
       
         $title = Input::get('title') ?: '';
         $request->session()->put('postTitle', $title); // did NOT work: session(['postTitle', $title]); 
@@ -33,12 +33,12 @@ class TagsController extends Controller
         // TODO: test without below
         session()->save();  // ??***??? is this important ??????????????
         
-        return view('tags.create', compact('tags', 'form_type', 'title', 'body'));
+        return view('tags.create', compact('tags', 'title', 'body')); // DEL cut: 'form_type',
     }
     
     public function createWPost(Request $request, Post $post){ // *** better name createFromEditPost ???
     	$tags = Tag::orderBy('name', 'desc')->get(); // ??may not list all tags if form adds a new tag??
-    	$form_type = $request->form_type;
+    	// DEL 3/7/18 cut $form_type = $request->form_type;
     	
     	$title = Input::get('title') ?: '';
     	$request->session()->put('postTitle', $title); // did NOT work: session(['postTitle', $title]);
@@ -48,7 +48,7 @@ class TagsController extends Controller
     	session()->save();  // ??***??? is this important ??????????????
     	$postid = $post->id;
     	
-    	return view('tags.create', compact('tags', 'form_type', 'title', 'body', 'postid'));
+    	return view('tags.create', compact('tags', 'title', 'body', 'postid')); // 3/7 DEL cut: 'form_type', 
     }
     
     public function store() {

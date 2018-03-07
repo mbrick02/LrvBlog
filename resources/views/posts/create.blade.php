@@ -30,7 +30,7 @@
 		  	session()->forget('postBody');
 		  @endphp
           <div class="form-group">
-          	<input type="hidden" name="form_type" value="createPostForm">
+          	<!--  *** DELETE input type="hidden" name="form_type" value="createPostForm" -->
             <label for="title">Title:</label>
             <input type="text" class="form-control" id="title" placeholder="Title"
             name="title" value="{{$restoreTitle}}" required>
@@ -43,7 +43,7 @@
                     @foreach ($tags as $tag)
                      <span class="tag-item">
                         <input type="checkbox" name="tags[]" value="{{$tag->name}}"
-                        id="{{$tag->name}}">
+                        id="{{$tag->name}}" >
                         <label for="{{$tag->name}}">{{$tag->name}}</label>
                      </span>
                     @endforeach

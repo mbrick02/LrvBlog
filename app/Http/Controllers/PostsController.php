@@ -84,7 +84,6 @@ class PostsController extends Controller
         $postUpdate = Post::find($post->id);
         $post->title = $request->title;
         $post->body = $request->body;
-        // dd($post);
         $post->update();
       
         

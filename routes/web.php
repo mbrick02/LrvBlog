@@ -11,8 +11,11 @@
 |
 */
 
+
+// TODO: Need to have 'catch-all' through http or laravel so bad addresses arent errors
 // Route::get('/', 'PostsController@index');
 Route::get('/', 'PostsController@index')->name('home');
+Route::get('/posts', 'PostsController@index');
 
 Route::get('/posts/create', 'PostsController@create');
 // having a resource of "posts" route to GET "/posts" to view all posts
