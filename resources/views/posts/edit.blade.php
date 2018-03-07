@@ -76,8 +76,7 @@ NOT AN HTML COMMENT REMOVE ****** // ***************************************
             <div class="form-group">
             <label for="body">Body:</label>
             <textarea id="body" name="body" class="form-control"
-                required>
-                {{$restoreBody}}</textarea>
+                required>{{$restoreBody}}</textarea>
             </div>
             
             <div class="form-group">

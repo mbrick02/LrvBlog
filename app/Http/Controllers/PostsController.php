@@ -67,7 +67,7 @@ class PostsController extends Controller
       return redirect('/');
     }
     
-    public function patch(Post $post) {
+    public function patch(Post $post, Request $request) {
         // Validation
         $this->validate(request(), [
             'title' => 'required|min:2',
@@ -82,8 +82,9 @@ class PostsController extends Controller
         // e.g.:  "tags" => array[ 0 => "Ascension" ]
         
         $postUpdate = Post::find($post->id);
-        $post->title = request(['title']);
-        $post->body = request(['body']);
+        $post->title = $request->title;
+        $post->body = $request->body;
+        // dd($post);
         $post->update();
       
         
