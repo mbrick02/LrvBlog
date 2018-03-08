@@ -42,8 +42,10 @@
                 <div class="tag-item clearfix">
                     @foreach ($tags as $tag)
                      <span class="tag-item">
+                     {{-- TODO: for this create form and edit, style class for checkbox --}}
                         <input type="checkbox" name="tags[]" value="{{$tag->name}}"
-                        id="{{$tag->name}}" >
+                        id="{{$tag->name}}"{{ (is_array(old('tags')) && 
+                           in_array($tag->name, old('tags'))) ? ' checked' : '' }}>
                         <label for="{{$tag->name}}">{{$tag->name}}</label>
                      </span>
                     @endforeach
