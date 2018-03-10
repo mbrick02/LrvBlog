@@ -45,7 +45,7 @@ Route::get('/tags/create', 'TagsController@create');
 Route::get('/tags/{post}/create', 'TagsController@createWPost');
 
 Route::post('/tags/create', 'TagsController@store');
-Route::post('/tags/{post}/edit', 'TagsController@storeWPost');
+Route::post('/tags/{post}/create', 'TagsController@storeWPost');
 
 Route::get('/login', 'SessionsController@create')->name('login');
 Route::post('/login', 'SessionsController@store');

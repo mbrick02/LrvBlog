@@ -63,7 +63,7 @@ class TagsController extends Controller
         ]);
         // TODO: if (post/edit) { return redirect('posts/edit'); } else {
         // ... editPostForm vs createPostForm
-        return redirect('/posts/create'); 
+        return view('/posts/create'); 
     }
     
     public function storeWPost(Post $post) {
@@ -78,6 +78,7 @@ class TagsController extends Controller
         ]);
         // TODO: if (post/edit) { return redirect('posts/edit'); } else {
         // ... editPostForm vs createPostForm
-        return redirect('/posts/{post}/edit');
+        $tags = Tag::orderBy('name', 'asc')->get();
+        return view('posts.edit', compact('post'), compact('tags'));
     }
 }

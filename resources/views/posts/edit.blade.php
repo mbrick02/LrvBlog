@@ -16,21 +16,22 @@
 <h1>Edit a Post</h1>
 
 <hr>
-// ***************Based on combo of Create view/posts/create.blade.php &  show.blade.php (see below *****...) 
+// **********is combo of: 
+//      Create view/posts/create.blade.php & show.blade.php (see below *****...) 
 NOT AN HTML COMMENT REMOVE ****** // ***************************************
 <form method="POST" action="/posts/{{ $post->id }}/edit" name="postEditForm">
 {{ csrf_field() }}
 {{ method_field('PATCH') }} 
 @php
   $restoreBody = session('postBody', '') ?: (session('postBody') ?: $post->body);
-  $restoreTitle = session('postTitle', '') ?: (session('postTitle') ?: $post->title);  
+  $restoreTitle = session('postTitle', '') ?: (session('postTitle') ?: $post->title); 
   	
   session()->forget('postTitle'); // clear old to get new field val if we leave the page
   session()->forget('postBody');
 @endphp
 
 <div class="form-group">
-<input type="hidden" name="form_type" value="editPostForm">
+<!--  DEL NO LONGER using: input type="hidden" name="form_type" value="editPostForm" -->
 <label for="title">Title:</label>
 <input type="text" class="form-control" id="title" placeholder="Title"
     name="title" value="{{ $restoreTitle }}" required>
