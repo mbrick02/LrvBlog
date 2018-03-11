@@ -75,15 +75,32 @@ class PostsController extends Controller
         ]);
         
         // TODO: store checked tags
-        // $tagsChecked = $request->input('tagCheckboxArrayChecked???NOTSURE***');
+        $tagsChecked = $request->input('tags');
         // Note: in posts/create.blade.php, the "tags" checkboxes are named "tags[]"
         // so $request should have the checked values in that array so ...
         //  ??... foreach ($request->tags[] as $tag) { if(NotPostTag) { $post->tags()->attach($tag); } } ...**
+        $alreadyTagged = array();
+        foreach ($post->tags as $tag) {
+            if (!(in_array($tag->name, $tagsChecked))) { // old tag is unchecked so remove
+                $post->tags()->detach($tag);
+            } else {
+                array_push($alreadyTagged, $tag->name); 
+            }
+        }
+        
+        foreach ($tagsChecked as $tagName) {
+            if (! (in_array($tagName, $alreadyTagged))) {
+                $post->tags()->attach($tagName);
+            }
+        }
+            
         // e.g.:  "tags" => array[ 0 => "Ascension" ]
         
-        $postUpdate = Post::find($post->id);
+        // DEL $postUpdate = Post::find($post->id);
         $post->title = $request->title;
         $post->body = $request->body;
+        // *** foreach oldPostTags as oldPostTag 
+        //         if (oldPostTag notIn inputTags) $post->tags()->detach
         $post->update();
       
         

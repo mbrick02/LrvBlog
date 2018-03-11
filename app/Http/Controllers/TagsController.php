@@ -40,10 +40,13 @@ class TagsController extends Controller
     	$tags = Tag::orderBy('name', 'desc')->get(); // ??may not list all tags if form adds a new tag??
     	// DEL 3/7/18 cut $form_type = $request->form_type;
     	
-    	$title = Input::get('title') ?: '';
-    	$request->session()->put('postTitle', $title); // did NOT work: session(['postTitle', $title]);
-    	$body = Input::get('body') ?: '';
-    	$request->session()->put('postBody', $body);
+    	// $title = Input::get('title') ?: '';
+    	$request->session()->put('postTitle', Input::get('title') ?: ''); // $title // did NOT work: session(['postTitle', $title]);
+    	// $body = Input::get('body') ?: '';
+    	$request->session()->put('postBody', Input::get('body') ?: '');
+    	
+    	// $postTags = $request->input('tags');
+    	$request->session()->set('postTags.tag', Input::get('tags') ?: '');
     	// TODO: test without below
     	session()->save();  // ??***??? is this important ??????????????
     	$postid = $post->id;
@@ -58,6 +61,10 @@ class TagsController extends Controller
         ]);
         
         // TODO: may verify name does not already exist to avoid db error/blowup
+        // TODO: may verify name does not have space or punctuation (comma especially)
+        //              in_str(request('name')
+        //              message: no spaces or commas, or other puncuation, 
+        //                  except dash (-) or underscore (_), allowed
         Tag::create([
           'name' => request('name'),
         ]);

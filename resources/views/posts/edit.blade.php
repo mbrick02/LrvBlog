@@ -23,8 +23,9 @@ NOT AN HTML COMMENT REMOVE ****** // ***************************************
 {{ csrf_field() }}
 {{ method_field('PATCH') }} 
 @php
-  $restoreBody = session('postBody', '') ?: (session('postBody') ?: $post->body);
-  $restoreTitle = session('postTitle', '') ?: (session('postTitle') ?: $post->title); 
+  $restoreBody = session('postBody', '') ?: (session('postBody') ?: $post->body); // ?should $post->body be old('body')
+  $restoreTitle = session('postTitle', '') ?: (session('postTitle') ?: $post->title);
+  $restoreCheckedTags = session('postTags.tag', '') ?: (session('postTags.tag') ?: $post->tags);
   	
   session()->forget('postTitle'); // clear old to get new field val if we leave the page
   session()->forget('postBody');
@@ -43,9 +44,9 @@ NOT AN HTML COMMENT REMOVE ****** // ***************************************
     <div class="tag-item clearfix">
    
  	{{-- TODO: test for existing tags 2/16/18 --}}
-    @if (count($post->tags)) // *** or $post->tags->count() ?? >0 ???
+    @if (count($restoreCheckedTags))
   		@php	$postTags = array(); @endphp
-    	@foreach ($post->tags as $setTag)
+    	@foreach ($restoreCheckedTags as $setTag)
     		@php
     			array_push($postTags, $setTag->name);
     		@endphp
@@ -56,7 +57,8 @@ NOT AN HTML COMMENT REMOVE ****** // ***************************************
         <span class="tag-item">
         <input type="checkbox" name="tags[]" value="{{$tag->name}}"
         id="{{$tag->name}}"
-			@if (isset($postTags) && (in_array($tag->name, $postTags))) {{-- check if already in post-tags --}}
+			@if (isset($postTags) && (in_array($tag->name, $postTags))) 
+			   {{-- check if already in post-tags --}}
 			 checked
 			@endif
         >
