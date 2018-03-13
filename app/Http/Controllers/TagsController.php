@@ -91,7 +91,15 @@ class TagsController extends Controller
             'name' => request('name'),
         ]);
         
+        $postTagNames = array();
+        
+        foreach ($post->tags as $postTag) {
+            array_push($postTagNames, $postTag->name);
+        }
+        
+        // dd($postTagNames); array:1 [ 0 => "Personal" ]
+        
         $tags = Tag::orderBy('name', 'asc')->get();
-        return view('posts.edit', compact('post'), compact('tags'));
+        return view('posts.edit', compact('post', 'tags', 'postTagNames'));
     }
 }

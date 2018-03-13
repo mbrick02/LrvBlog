@@ -25,6 +25,7 @@
           	
           session()->forget('postTitle'); // clear old to get new field val if we leave the page
           session()->forget('postBody');
+          session()->forget('postTags'); // ?will this remove postTags.tag & subdirs
         @endphp
     
         <div class="form-group">
@@ -41,32 +42,45 @@
        
         @if (count($restoreCheckedTags)) {{-- TODO: test for existing tags 2/16/18 --}}
       		@php	$postTags = array(); @endphp
-        	@foreach ($restoreCheckedTags as $setTag)
-        		@php
-        			array_push($postTags, $setTag);
-        		@endphp
-        	@endforeach
-        	
+        	@if ($postTagNames) { {{-- names are stored in postTagNames -- restoreCheckedTags is objects --}}
+            	@foreach ($postTagNames as $setTag)
+            		@php
+            			array_push($postTags, $setTag);
+            		@endphp
+            	@endforeach
+        	@else {{-- names are stored in restoreCheckedTags is objects --}}
+            	@foreach ($restoreCheckedTags as $setTag)
+            		@php
+            			array_push($postTags, $setTag);
+            		@endphp
+            	@endforeach        	
+        	@endif
         @endif
         
         @foreach ($tags as $tag)
-        	@php $postTagChecked = false; @endphp
+        	<!--  DEL *** @ php $postTagChecked = false; @ endphp ***DEL -->
             <span class="tag-item">
+            <!-- DEL **** was after tag->name @ php $tagName = {{ $tag->name }}; @ endphp  < ? php echo $tagName ? > *****DEL  --> 
+           <!-- DEL **** ...  <h3>Post Tag Name: [<[< $postTag->name >]>]</h3>    <h3>Tag Name: [<[< $tag->name  >]>]</h3> *****DEL  -->
+    				<!-- DEL **** @ php $postTagChecked = false; @ endphp *****DEL  -->
             <input type="checkbox" name="tags[]" value="{{$tag->name}}"
             id="{{$tag->name}}"
-            @php $tagName = {{ $tag->name }}; @endphp
-            <?php echo $tagName ?>
             	@foreach ($postTags as $postTag)
-    				@if ($postTag->where('name', '=', $tag->name)->count() > 0)
-    					@php $postTagChecked = false; @endphp
+    				@if (is_object($postTag))
+    					@if ($postTag->name == $tag->name)
+    						checked
+    					@endif
+    				@else
+     					@if (in_array($tag->name, $postTag))
+    						checked
+    					@endif   				
     				@endif
     			@endforeach
-    			@if(isset($postTags) && 
-    				$postTagChecked)
-    			   {{-- check if already in post-tags --}}
-    			 checked
-    			@endif
             >
+            <!-- DEL **** @ if(isset($postTags))
+    			   {{-- ??? && $postTagCheckedcheck -- was based on if already in post-tags --}}
+    			 checked
+    			@ endif ****DEL  -->
             <label for="{{$tag->name}}">{{$tag->name}}</label>
             </span>
          @endforeach
