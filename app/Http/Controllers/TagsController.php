@@ -73,7 +73,7 @@ class TagsController extends Controller
         return view('/posts/create'); 
     }
     
-    public function storeWPost(Post $post) {
+    public function storeWPost(Post $post) {  // 4/27/18 ?apparently storing tag w/Post? 
         // Validation
         $this->validate(request(), [
             'name' => 'required|min:2|max:20',

@@ -54,7 +54,8 @@
             <button type="submit" class="btn btn-primary">Add Comment</button>
             @if (($post->user->id) == (auth()->user()->id))
             	<!-- let author edit post -->
-            	<button type="button" class="btn btn-primary" onClick="return letUserEditPost({{ $post->id }});" 
+            	<button type="button" class="btn btn-primary" 
+            	onClick="return letUserEditPost({{ $post->id }});" 
             	id="editBtn">Edit Post</button>
             @endif
           </div>
