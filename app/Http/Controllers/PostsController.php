@@ -50,7 +50,8 @@ class PostsController extends Controller
         }
         
     	$tags = Tag::orderBy('name', 'asc')->get();
-        return view('posts.edit', compact('post'), compact('tags'));
+        // return view('posts.edit', compact('post'), compact('tags'));
+    	return view('posts.edit', compact('post', 'tags', 'postTagNames'));
     }
 
     public function store() {
