@@ -41,7 +41,7 @@ class PostsController extends Controller
     public function edit(Post $post) {
         // 4/27/18 code below from TagsController@storeWPost 
         //  in answer to error: Undefin var: postTagNames
-        //  ?If this works, I probabaly need to refactor a function postTagNames in Post
+        //  ?If this works, I probably need to refactor a function postTagNames in Post
 
         $postTagNames = array();
         
@@ -51,7 +51,7 @@ class PostsController extends Controller
         
     	$tags = Tag::orderBy('name', 'asc')->get();
         // return view('posts.edit', compact('post'), compact('tags'));
-    	return view('posts.edit', compact('post', 'tags', 'postTagNames'));
+    	return view('posts.edit', compact(['postTagNames', 'post', 'tags']));
     }
 
     public function store() {
