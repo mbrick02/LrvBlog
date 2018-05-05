@@ -42,7 +42,7 @@
        
         @if (count($restoreCheckedTags)) {{-- TODO: test for existing tags 2/16/18 --}}
       		@php	$postTags = array(); @endphp
-        	@if ($postTagNames) { {{-- names are stored in postTagNames -- restoreCheckedTags is objects --}}
+        	@if ($postTagNames) {{-- names are stored in postTagNames - restoreCheckedTags is objects --}}
             	@foreach ($postTagNames as $setTag)
             		@php
             			array_push($postTags, $setTag);
@@ -71,7 +71,7 @@
     						checked
     					@endif
     				@else
-     					@if (in_array($tag->name, $postTag))
+     					@if (in_array($tag->name, $postTags))
     						checked
     					@endif   				
     				@endif
