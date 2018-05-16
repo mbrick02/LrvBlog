@@ -40,47 +40,32 @@
         <legend class="tag-cloud">Tags to group by</legend>
         <div class="tag-item clearfix">
        
-        @if (count($restoreCheckedTags)) {{-- TODO: test for existing tags 2/16/18 --}}
-      		@php	$postTags = array(); @endphp
-        	@if ($postTagNames) {{-- names are stored in postTagNames - restoreCheckedTags is objects --}}
-            	@foreach ($postTagNames as $setTag)
-            		@php
-            			array_push($postTags, $setTag);
-            		@endphp
-            	@endforeach
-        	@else {{-- names are stored in restoreCheckedTags is objects --}}
-            	@foreach ($restoreCheckedTags as $setTag)
-            		@php
-            			array_push($postTags, $setTag);
-            		@endphp
-            	@endforeach        	
+        @php	$postTags = array(); @endphp
+        @if (count($restoreCheckedTags)) {{-- if any CheckedTags --}}
+        	@if (!$postTagNames) {{-- names NOT stored in postTagNames but restoreCheckedTags obj --}}
+          			{{-- names ARE stored in restoreCheckedTags is objects --}}
+            	$postTagNames = $restoreCheckedTags
         	@endif
+        	@foreach ($postTagNames as $setTag)
+        		@if (is_object($setTag))
+        			@php array_push($postTags, $setTag->name); @endphp
+        		@else
+        			@php array_push($postTags, $setTag); @endphp
+        		@endif
+            @endforeach         	
         @endif
         
-        @foreach ($tags as $tag)
-        	<!--  DEL *** @ php $postTagChecked = false; @ endphp ***DEL -->
+        @foreach ($tags as $tag) {{-- loop thru all tags (passed from PostController) --}}
             <span class="tag-item">
-            <!-- DEL **** was after tag->name @ php $tagName = {{ $tag->name }}; @ endphp  < ? php echo $tagName ? > *****DEL  --> 
-           <!-- DEL **** ...  <h3>Post Tag Name: [<[< $postTag->name >]>]</h3>    <h3>Tag Name: [<[< $tag->name  >]>]</h3> *****DEL  -->
-    				<!-- DEL **** @ php $postTagChecked = false; @ endphp *****DEL  -->
+            {{-- print out tags -- Checked if already in post-tag or active form --}}
             <input type="checkbox" name="tags[]" value="{{$tag->name}}"
-            id="{{$tag->name}}"
+            id="{{$tag->name}}" 
             	@foreach ($postTags as $postTag)
-    				@if (is_object($postTag))
-    					@if ($postTag->name == $tag->name)
-    						checked
-    					@endif
-    				@else
-     					@if (in_array($tag->name, $postTags))
-    						checked
-    					@endif   				
+    				@if (in_array($tag->name, $postTags))
+    					checked
     				@endif
     			@endforeach
             >
-            <!-- DEL **** @ if(isset($postTags))
-    			   {{-- ??? && $postTagCheckedcheck -- was based on if already in post-tags --}}
-    			 checked
-    			@ endif ****DEL  -->
             <label for="{{$tag->name}}">{{$tag->name}}</label>
             </span>
          @endforeach
