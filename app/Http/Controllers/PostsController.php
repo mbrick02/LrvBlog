@@ -85,35 +85,37 @@ class PostsController extends Controller
             'body' => 'required|min:2'
         ]);
         
-        // TODO: store checked tags
-        $tagsChecked = $request->input('tags');
-        // Note: in posts/create.blade.php, the "tags" checkboxes are named "tags[]"
-        // so $request should have the checked values in that array so ...
-        //  ??... foreach ($request->tags[] as $tag) { if(NotPostTag) { $post->tags()->attach($tag); } } ...**
-        $alreadyTagged = array();
-        foreach ($post->tags as $tag) {
-            if (!(in_array($tag->name, $tagsChecked))) { // old tag is unchecked so remove
-                $post->tags()->detach($tag);
-            } else {
-                array_push($alreadyTagged, $tag->name); 
-            }
-        }
-        
-        foreach ($tagsChecked as $tagName) {
-            if (! (in_array($tagName, $alreadyTagged))) {
-                $post->tags()->attach($tagName);
-            }
-        }
-            
+        // store checked tags -- in posts/edit.blade.php, "tags" checkboxes = "tags[]"
         // e.g.:  "tags" => array[ 0 => "Ascension" ]
+        $tagsChecked = $request->input('tags');
+
+        $curTags = array();
+        foreach ($post->tags as $tag) { // look thru all db post's tags -- remove unchecked
+            if (!(in_array($tag->name, $tagsChecked))) { // old tag is Now unchecked so remove
+                $post->tags()->detach($tag->id);
+            } else {        // (previously and) currently checked
+                array_push($curTags, $tag->name); 
+            }
+        }
         
-        // DEL $postUpdate = Post::find($post->id);
+        // rather than go thru all tags, just go thru checked
+        foreach ($tagsChecked as $tagName) {
+            if (!in_array($tagName, $curTags)) {
+                $tag = Tag::where('name', $tagName)->first();
+                if (isset($tag)) { // if tag exists (?is_object) attach to post tags (post_tag table)
+                    $post->tags()->attach($tag->id);  // previously checked attached/in db
+                }  else {   // tag not found -- should NOT be possible
+                    session()->flash('message', 'Tag not found');
+                    // redirect back to page -- ?make sure message var in page? 
+                    return back();
+                }
+            }
+        }
+        
         $post->title = $request->title;
         $post->body = $request->body;
-        // *** foreach oldPostTags as oldPostTag 
-        //         if (oldPostTag notIn inputTags) $post->tags()->detach
-        $post->update();
-      
+
+        $post->update();      
         
         session()->flash('message', 'Your post has now been updated.');
         
