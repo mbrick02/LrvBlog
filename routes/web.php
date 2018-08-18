@@ -14,6 +14,7 @@
 
 // TODO: Need to have 'catch-all' through http or laravel so bad addresses arent errors
 // Route::get('/', 'PostsController@index');
+// TODO: 08/18 combine most Route::get/post/edit/show into Route::resource() 
 Route::get('/', 'PostsController@index')->name('home');
 Route::get('/posts', 'PostsController@index');
 
@@ -51,3 +52,21 @@ Route::get('/login', 'SessionsController@create')->name('login');
 Route::post('/login', 'SessionsController@store');
 Route::get('/logout', 'SessionsController@destroy');
     // **CHANGE: best practice is to make logout a post() so others cant log u out
+Route::get('/product', 'ProductController@getIndex')->name('product.index');
+Route::get('/shopping-cart', 'ProductController@getCart')->name('product.shoppingCart');
+ // added this for vid #9
+ 
+Route::group(['prefix' => 'user'], function() {
+    Route::group(['middleware' => 'guest'], function() { 	// only guest/unauthenticated users may signup
+        Route::get('/signup', 'UserController@getSignup')->name('user.signup');
+        Route::post('/signup', 'UserController@postSignup')->name('user.signup');
+        Route::get('/signin', 'UserController@getSignin')->name('user.signin');
+        Route::post('/signin', 'UserController@postSignin')->name('user.signin');
+    });
+    
+    Route::group(['middleware' => 'auth'], function() { 	// only authenticated users
+        Route::get('/profile', 'UserController@getProfile')->name('user.profile');
+        Route::get('/logout', 'UserController@getLogout')->name('user.logout');
+    });
+});
+
