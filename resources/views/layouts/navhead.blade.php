@@ -1,20 +1,20 @@
 <div class="blog-masthead">
-	<nav class="navbar navbar-default">
+	<nav class="navbar navbar-expand-lg navbar-light bg-light">
 	<div class="container container-fluid">
 
         <!-- Brand and toggle get grouped for better mobile display -->
 		<div class="navbar-header">
-			<button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
-				data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-				<span class="sr-only">Toggle navigation</span>
-				<span class="icon-bar"></span>
-			</button>
 			<a class="navbar-brand" href="{{ route('product.index') }}">Brand</a>
+			<button type="button" class="navbar-toggler" data-toggle="collapse" 
+			data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" 
+			aria-expanded="false" aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
+			</button>
 		</div>
 		<!-- Collect the nav links, forms, and oth content for toggling -->
-		<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-			<ul class="nav navbar-nav">
-				<li><a class="nav-link active" href="/">Home</a></li>
+		<div class="collapse navbar-collapse" id="navbarSupportedContent">
+			<ul class="navbar-nav mr-auto">
+				<li><a class="nav-link nav-item active" href="/">Home</a></li>
 				<li><a class="nav-link" href="#">About</a></li>
 				@if (Auth::check())
 					<li>
@@ -25,27 +25,29 @@
 			
 			</ul>
 			<ul class="nav navbar-nav navbar-right">
-				<li><a href="{{ route('product.shoppingCart') }}">
-                <i class="fa fa-shopping-cart" aria-hidden="true"></i>Shopping Cart
-                					<span class="badge">
-                {{ Session::has('cart') ? Session::get('cart')->totalQty : '' }}
-                </span> 
+				<li>
+				<a href="{{ route('product.shoppingCart') }}">
+					<i class="fa fa-shopping-cart" aria-hidden="true"></i> Shopping Cart
+					  <span class="badge">
+                	    {{ Session::has('cart') ? Session::get('cart')->totalQty : '' }}
+                	  </span> 
                 </a></li>
-                <li class="dropdown"><a href="#" class-"dropdown-toggle" 
-                  data-toggle="dropdown" role="button" aria-haspopup="true" 
-                  aria-expanded="false"><i class="fa fa-user" aria-hidden="true></i>
-                  User Management <span class="caret"></span></a>
-                	<ul class="dropdown-menu">
-                		@if(Auth::check())    <!-- ****MB lesson 7 auth -->
-                			<li><a href="{{ route('user.profile') }}">User Profile</a></li>
-                			<li role="separator" class="divider"></li>
-                			<li><a href="{{ route('user.logout') }}">Logout</a></li>
-                		@else
-                			<li><a href="{{ route('user.signup') }}">Signup</a></li>
-                			<li><a href="{{ route('user.signin') }}">Signin</a></li>
-                		@endif
-                	</ul>
-                </li>
+                <li><div class="dropdown">
+					<button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" 
+                      data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        @if(Auth::check()) User  @else  Visitor  @endif
+					</button>
+					<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                    	@if(Auth::check())  
+                    		<a class="dropdown-item" href="{{ route('profile') }}">User Profile</a>
+                    		<div class="dropdown-divider"></div>
+                    		<a class="dropdown-item" href="{{ route('logout') }}">Logout</a>
+                    	@else
+                    		<a class="dropdown-item" href="{{ route('signup') }}">Signup</a>
+                    		<a class="dropdown-item" href="{{ route('login') }}">Signin</a>
+                    	@endif
+                    </div>
+				</div></li>
 			</ul>
 		</div><!-- /.navbar-collapse -->
     </div> <!-- /.container-fluid -->

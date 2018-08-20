@@ -55,7 +55,7 @@ h6,
   position: relative;
   padding: 1rem;
   font-weight: 500;
-  color: #cdddeb;
+  color: #cc0000;
 }
 
 .nav-link:hover,
@@ -204,6 +204,10 @@ span.tag-item {
   z-index: 10;
   -webkit-animation: mbflash-message 4s forwards;
           animation: mbflash-message 4s forwards;
+}
+
+div.navbar-header > a.navbar-brand {
+	color: #000000;
 }
 
 @-webkit-keyframes mbflash-message {

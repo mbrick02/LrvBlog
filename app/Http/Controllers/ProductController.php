@@ -2,11 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Product;
+// use App\Order;	// to put purchases from cart into DB
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
+use Session;
+use Auth;
 
-use App\Product;
 
 class ProductController extends Controller
 {

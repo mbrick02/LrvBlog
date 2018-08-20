@@ -39,34 +39,29 @@ Route::post('/posts/{post}/comments', 'CommentsController@store');
 Route::get('/posts/{post}/edit', 'PostsController@edit');
 Route::patch('/posts/{post}/edit', 'PostsController@patch');
 
-Route::get('/register', 'RegistrationController@create');
-Route::post('/register', 'RegistrationController@store');
-
 Route::get('/tags/create', 'TagsController@create');
 Route::get('/tags/{post}/create', 'TagsController@createWPost');
 
 Route::post('/tags/create', 'TagsController@store');
 Route::post('/tags/{post}/create', 'TagsController@storeWPost');
 
-Route::get('/login', 'SessionsController@create')->name('login');
-Route::post('/login', 'SessionsController@store');
-Route::get('/logout', 'SessionsController@destroy');
     // **CHANGE: best practice is to make logout a post() so others cant log u out
 Route::get('/product', 'ProductController@getIndex')->name('product.index');
 Route::get('/shopping-cart', 'ProductController@getCart')->name('product.shoppingCart');
+
+Route::get('/reduce/{id}', 'ProductController@getReduceByOne')->name('product.reduceByOne');
  // added this for vid #9
  
-Route::group(['prefix' => 'user'], function() {
-    Route::group(['middleware' => 'guest'], function() { 	// only guest/unauthenticated users may signup
-        Route::get('/signup', 'UserController@getSignup')->name('user.signup');
-        Route::post('/signup', 'UserController@postSignup')->name('user.signup');
-        Route::get('/signin', 'UserController@getSignin')->name('user.signin');
-        Route::post('/signin', 'UserController@postSignin')->name('user.signin');
-    });
-    
-    Route::group(['middleware' => 'auth'], function() { 	// only authenticated users
-        Route::get('/profile', 'UserController@getProfile')->name('user.profile');
-        Route::get('/logout', 'UserController@getLogout')->name('user.logout');
-    });
+Route::group(['middleware' => 'guest'], function() { 	// only guest/unauthenticated users may signup
+    // Route::get('/signup', 'UserController@getSignup')->name('user.signup');
+    Route::get('/register', 'RegistrationController@create')->name('signup');
+    Route::post('/register', 'RegistrationController@store')->name('signup');
+    Route::get('/login', 'SessionsController@create')->name('login');
+    Route::post('/login', 'SessionsController@store')->name('login');
+});
+
+Route::group(['middleware' => 'auth'], function() { 	// only authenticated users
+    Route::get('/profile', 'UserController@getProfile')->name('profile');
+    Route::get('/logout', 'SessionsController@destroy')->name('logout');
 });
 

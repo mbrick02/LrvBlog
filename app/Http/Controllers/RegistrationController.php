@@ -25,4 +25,8 @@ class RegistrationController extends Controller
        return redirect()->home(); // or redirect('/');
 
     }
+    
+    // public function update(RegistrationForm $from) {  
+    // 8/20/18 can we use same form and lock out certain fields prepopulate
+    //  $form->update();
 }

@@ -37,7 +37,7 @@ class RegistrationForm extends FormRequest
 
     public function persist()  // after form validated and authorized
     {
-      //  Create and save the user.
+      //  Create and save the user. called by RegistrationController@store
       // obj. is req., so use below: $user = User::create(request(['name', 'email', 'password']));
       // note: request([]) = request()->only([])
       $user = User::create([
