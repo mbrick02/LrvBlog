@@ -1,5 +1,9 @@
 @extends('layouts.master')
 
+@section('title')
+	Edit Post
+@endsection
+
 @section('content')
 	<script type="text/javascript">
 

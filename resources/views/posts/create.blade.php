@@ -1,5 +1,9 @@
 @extends('layouts.master')
 <!-- note: may need masterSess. above to set vals -->
+@section('title')
+	Create Post
+@endsection
+
 @section('content')
 <script type="text/javascript">
 

@@ -1,4 +1,8 @@
-<!DOCTYPE div SYSTEM "div.dtd">@extends('layouts.master')
+@extends('layouts.master')
+
+@section('title')
+	List Posts
+@endsection
 
 @section('content')
     <div class="col-sm-8 blog-main">

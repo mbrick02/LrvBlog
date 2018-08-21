@@ -1,5 +1,7 @@
 @extends('layouts.master')
-
+@section('title')
+	Show Posts
+@endsection
 @section('content')
 <script type="text/javascript">
 

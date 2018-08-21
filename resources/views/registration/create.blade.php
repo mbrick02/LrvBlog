@@ -1,5 +1,7 @@
 @extends('layouts.master')
-
+@section('title')
+	Register User
+@endsection
 @section('content')
   <div class="col-sm-8">
     <h1>Register</h1>
