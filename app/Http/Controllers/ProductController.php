@@ -6,7 +6,6 @@ use App\Product;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
-use App\Product;
 use Session;
 use Auth;
 

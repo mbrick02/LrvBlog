@@ -18,11 +18,11 @@
         <input type="email" class="form-control" id="email" name="email" required />
       </div>
             <div class="form-group">
-        <label for="fname">First Name:</label><!--  *** NEW FIELD 1/18 -->
+        <label for="fname">First Name:</label>
         <input type="text" class="form-control" id="fname" name="fname" required />
       </div>
       <div class="form-group">
-        <label for="lname">Last Name:</label><!--  *** NEW FIELD 1/18 -->
+        <label for="lname">Last Name:</label>
         <input type="text" class="form-control" id="lname" name="lname" required />
       </div>
       <div class="form-group">
