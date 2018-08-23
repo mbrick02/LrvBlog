@@ -61,7 +61,7 @@ Route::group(['middleware' => 'guest'], function() { 	// only guest/unauthentica
 });
 
 Route::group(['middleware' => 'auth'], function() { 	// only authenticated users
-    Route::get('/profile', 'UserController@getProfile')->name('profile');
+    Route::get('/profile/{user}', 'RegistrationController@profile')->name('profile');
     Route::get('/logout', 'SessionsController@destroy')->name('logout');
 });
 
