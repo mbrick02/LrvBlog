@@ -48,18 +48,17 @@ class RegistrationForm extends FormRequest
         'password' => \Hash::make($this->get('password')) // same as bcrypt()?
       ]);
 
-/* ??? this is from /app/Http/Controllers/Auth/RegisterController:
+        /* ??? this is from /app/Http/Controllers/Auth/RegisterController:
 
-create(array $data)
-{
-    return User::create([
-        'name' => $data['name'],
-        'email' => $data['email'],
-        'password' => bcrypt($data['password']),
-    ]);
-    'n'
-
-    **********************from RegisterController    */
+        create(array $data)
+        {
+            return User::create([
+                'name' => $data['name'],
+                'email' => $data['email'],
+                'password' => bcrypt($data['password']),
+             ]);
+                'n'
+        **********************from RegisterController    */
 
 
       // Sign them in.
@@ -67,5 +66,18 @@ create(array $data)
         // -- if you use helper func dont have to import class above
 
       \Mail::to($user)->send(new Welcome($user));
+    }
+    
+    public function update()
+    {        
+        // May NOT WANT username changed: $user->username = request('name');
+        $user->fname = request('fname');
+        $user->lnaem = request('lname');
+        $user->email = request('email');
+        // ONLY IF OLD PW VERIFIED: $user->password = bcrypt(request('password'));
+        
+        $user->save();
+        
+        return back();
     }
 }
