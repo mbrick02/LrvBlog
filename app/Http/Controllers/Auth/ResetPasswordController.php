@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers\Auth;
 
+use Illuminate\Support\Str;
+use Illuminate\Auth\Events\PasswordReset;
+
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\ResetsPasswords;
 
@@ -35,5 +38,28 @@ class ResetPasswordController extends Controller
     public function __construct()
     {
         $this->middleware('guest');
+    }
+    
+    /**
+     * Reset the given user's password.
+     *
+     * 8/29/18 from:
+     * https://scotch.io/tutorials/password-verification-using-laravel-form-request
+     *
+     * @param  \Illuminate\Contracts\Auth\CanResetPassword  $user
+     * @param  string  $password
+     * @return void
+     */
+    protected function resetPassword($user, $password)
+    {
+        $user->password = $password;
+        
+        $user->setRememberToken(Str::random(60));
+        
+        $user->save();
+        
+        event(new PasswordReset($user));
+        
+        $this->guard()->login($user);
     }
 }

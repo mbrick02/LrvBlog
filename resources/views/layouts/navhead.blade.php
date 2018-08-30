@@ -34,8 +34,8 @@
 					</button>
 					<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                 	@if(Auth::check())  
-                		<a class="dropdown-item" href="/profile/{{ Auth::user()->id }}">
-                		User Profile</a>
+                		<a class="dropdown-item {{ Request::is(Route::has('profile')) ? "active" : "" }}" href="/profile/{{ Auth::user()->id }}">
+                		User Profile (update)</a>
                 		<div class="dropdown-divider"></div>
                 		<a class="dropdown-item" href="{{ route('logout') }}">Logout</a>
                 	@else

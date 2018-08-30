@@ -6,6 +6,7 @@ use App\User;
 use App\Mail\Welcome;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Hash;
 
 class RegistrationForm extends FormRequest
 {
@@ -26,12 +27,60 @@ class RegistrationForm extends FormRequest
      */
     public function rules()
     {
+        switch($this->method()) {
+        
+            case 'POST':
+            {
+                return [
+                  'username' => 'required',
+                  'fname' => 'required',
+                  'lname' => 'required',
+                  'email' => 'required|email',
+                  'password' => 'required|confirmed|min:7'
+                ];
+            }
+            
+            case 'PATCH':
+            {
+                if (strlen(request('password')) > 0) {
+                    return [
+                        'username' => 'required|min:4',
+                        'fname' => 'required',
+                        'lname' => 'required',
+                        'email' => 'required|email',
+                        //?? 'old_password' => 'Hash::check(request('old_password'), $user->password)',
+                        'old_password' => 'required',
+                        'password' => 'required|confirmed|required_with:password_confirmation|min:7',
+                    ];
+                }else {  // no password change
+                    return [
+                        'username' => 'required',
+                        'fname' => 'required',
+                        'lname' => 'required',
+                        'email' => 'required|email',
+                    ];
+                }
+            }
+            default:break;
+        }
+    }
+    
+    public function withValidator($validator)  // force error on password check
+    {
+        // checks user current password
+        // before making changes
+        $validator->after(function ($validator) {
+            if ( !Hash::check($this->old_password, $this->user()->password) ) {
+                $validator->errors()->add('current_password', 'Your old password entry is incorrect.');
+            }
+        });
+            return;
+    }
+    
+    public function messages() {
         return [
-          'username' => 'required',
-          'fname' => 'required',
-          'lname' => 'required',
-          'email' => 'required|email',
-          'password' => 'required|confirmed'
+            'username.required' => 'Please supply a username',
+            'password.confirmed' => 'new password did not match confirmation password',
         ];
     }
 
@@ -45,10 +94,11 @@ class RegistrationForm extends FormRequest
         'fname' => $this->get('fname'),
         'lname' => $this->get('lname'),
         'email' => $this->get('email'),
-        'password' => \Hash::make($this->get('password')) // same as bcrypt()?
+        'password' =>  User::setPassword($this->get('password')),
+        // old (pre 8/29/18 see belod: 'password' => \Hash::make($this->get('password')) // same as bcrypt()?
       ]);
 
-        /* ??? this is from /app/Http/Controllers/Auth/RegisterController:
+        /* from old ver of /app/Http/Controllers/Auth/RegisterController:
 
         create(array $data)
         {
@@ -68,16 +118,34 @@ class RegistrationForm extends FormRequest
       \Mail::to($user)->send(new Welcome($user));
     }
     
-    public function update()
-    {        
+    public function patch()
+    {
+        $user = User::find($this->user()->id);
         // May NOT WANT username changed: $user->username = request('name');
         $user->fname = request('fname');
-        $user->lnaem = request('lname');
+        $user->lname = request('lname');
         $user->email = request('email');
-        // ONLY IF OLD PW VERIFIED: $user->password = bcrypt(request('password'));
         
-        $user->save();
+        if (strlen(request('password')) > 0) {
+            // ONLY IF new password & old password verified
+            if (Hash::check(request('old_password'), $user->password)) {
+                $user->password =>  User::setPassword($this->get('password'));
+                // $user->password = \Hash::make($this->get('password'));
+            } else {  // should now be handled in withValidator
+                // ***DEBUG
+                // dd('Old PW did NOT hash');
+                // $validator->errors()->add('current_password', 'Your old password entry is incorrect.');
+                session()->flash('message', 'Old Password did not match');
+                
+                // return redirect('/');
+                // redirect back to page
+                // return back();
+                // return redirect()->route('profileedit', ['user' => $user->id]);
+            }
+        }
         
-        return back();
+        // $user->save();
+        
+        // \Mail::to($user)->send(new Update($user));
     }
 }

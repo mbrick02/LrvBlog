@@ -202,8 +202,8 @@ span.tag-item {
   bottom: 20px;
   right: 20px;
   z-index: 10;
-  -webkit-animation: mbflash-message 4s forwards;
-          animation: mbflash-message 4s forwards;
+  -webkit-animation: mbflash-message 6s forwards;
+          animation: mbflash-message 6s forwards;
 }
 
 div.navbar-header > a.navbar-brand {
@@ -230,6 +230,10 @@ div.navbar-header > a.navbar-brand {
     opacity: 0;
     display: none;
   }
+}
+
+.hidePW {
+	display: none;
 }
 
 /*

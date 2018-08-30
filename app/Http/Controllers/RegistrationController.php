@@ -5,7 +5,8 @@ namespace App\Http\Controllers;
 // Dont need because construct has middleware('auth'): use Auth;
 
 use Mail;
-// in RegistrationForm: use App\User;
+// in RegistrationForm: 
+use App\User;
 // in RegistrationForm: use App\Mail\Welcome;
 use App\Http\Requests\RegistrationForm;
 
@@ -26,13 +27,20 @@ class objFrmField {
                             $this->read = 'readonly="'. $read . '" ';
                          }
                          $this->idName = 'id="'. $field .'" name="'. $field .'" ';
-                         if (auth()->user()) {
+                         if ((auth()->user()) && (auth()->user()->$field)) {
                             $this->value = 'value="'. auth()->user()->$field . '"';
                          } else {
                              $this->value = '';
                          }
                          $this->fieldVals =  $this->type . $this->aclass . $this->idName . $this->read . $this->value;
     }
+    
+//     example of html for above:     
+//     <div class="form-group">
+//     <label for="password_confirmation">Password_confirmation: </label>
+//     <input type="password" class="form-control" id="password_confirmation" 
+//      name="password_confirmation" readonly="readonly" value="xxxu7VU5EEIMaDO2W5F2wPjgP2lSFkxxx" />
+//     </div>
 }
 
 class RegistrationController extends Controller
@@ -64,19 +72,18 @@ class RegistrationController extends Controller
     public function store(RegistrationForm $form) {
         $form->persist();
 
-        session()->flash('message', 'Thanks so much for signing up'); // flash 1 page load
-        // session() = request()->session();
-        // May have achieved below in controller???
-        // ?session($key, $defaultVal) or session(['val' => 'ary']) helper ret cur val or default
+        session()->flash('message', 'Thanks so much for signing up'); // message shows and fades
 
        // Redirect to the home page.
        return redirect()->home(); // or redirect('/');
     }
     
-    function profile() {
+    function profile(User $user) {
         $aryTxtFlds = array('username', 'fname', 'lname');
 
         $aryAllFlds = array('username', 'email', 'fname', 'lname');
+        
+        // display example
         
         foreach ($aryAllFlds as $field) {
             $this->value = 'value="'. auth()->user()->$field . '"';
@@ -89,15 +96,18 @@ class RegistrationController extends Controller
             }
             
             $fieldVals[$field] = $aryFldObjs[$field]->fieldVals;
-        }        
+        }
         
-        return view('registration.profile', compact('user', 'fieldVals'));
+        $method = "post";
+        
+        return view('registration.profile', compact('user', 'fieldVals', 'method'));
     }
     
-    public function edit() {
+    public function edit(User $user) {
         $aryTxtFlds = array('username', 'fname', 'lname');
         
-        $aryAllFlds = array('username', 'email', 'fname', 'lname', 'password', 'password_confirmation');
+        $aryAllFlds = array('username', 'email', 'fname', 'lname');
+        // add these BUT make optional with Change Password button: , 'password', 'password_confirmation'
         
         foreach ($aryAllFlds as $field) {
             $this->value = 'value="'. auth()->user()->$field . '"';
@@ -110,16 +120,19 @@ class RegistrationController extends Controller
             }
             
             $fieldVals[$field] = $aryFldObjs[$field]->fieldVals;
-        }  
-        return view('registration.edit', compact('user', 'fieldVals'));
+        }
+        
+        $method = "patch";
+        
+        return view('registration.editprofile', compact('user', 'fieldVals', 'method'));
     }
     
     public function update(RegistrationForm $form) {
-        $form->update();
+        $form->patch();
         
         session()->flash('message', 'Profile has been updated'); // flash 1 page load
 
         // Redirect to profile.
-        return redirect()->route('profile', ['id' => Auth::user()->id]); // or redirect('/');
+        return redirect()->route('home'); // or 'profile', ['id' => Auth::user()->id] redirect('/');
     }
 }

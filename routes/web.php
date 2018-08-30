@@ -63,7 +63,8 @@ Route::group(['middleware' => 'guest'], function() { 	// only guest/unauthentica
 Route::group(['middleware' => 'auth'], function() { 	// only authenticated users
     Route::get('/profile/{user}', 'RegistrationController@profile')->name('profile');
     Route::get('/profile/{user}/edit', 'RegistrationController@edit');
-    Route::get('/profile/{user}/edit', 'RegistrationController@update');
+    Route::post('/profile/{user}/edit', 'RegistrationController@edit')->name('profileedit');
+    Route::patch('/profile/{user}/edit', 'RegistrationController@update');
     Route::get('/logout', 'SessionsController@destroy')->name('logout');
 });
 
