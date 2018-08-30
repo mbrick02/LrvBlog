@@ -45,7 +45,7 @@ class User extends Authenticatable
     {
         $this->password = bcrypt($password);
         
-        return $this;
+        return $this->password;
     }
     
     /*

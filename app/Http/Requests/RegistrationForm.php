@@ -129,9 +129,9 @@ class RegistrationForm extends FormRequest
         if (strlen(request('password')) > 0) {
             // ONLY IF new password & old password verified
             if (Hash::check(request('old_password'), $user->password)) {
-                $user->password =>  User::setPassword($this->get('password'));
+                $user->password =  $user->setPassword($this->get('password'));
                 // $user->password = \Hash::make($this->get('password'));
-            } else {  // should now be handled in withValidator
+            } else {  // should NOT go here - handled in withValidator -- CANT return/redirect Req form method
                 // ***DEBUG
                 // dd('Old PW did NOT hash');
                 // $validator->errors()->add('current_password', 'Your old password entry is incorrect.');
@@ -144,7 +144,7 @@ class RegistrationForm extends FormRequest
             }
         }
         
-        // $user->save();
+        $user->save();
         
         // \Mail::to($user)->send(new Update($user));
     }
