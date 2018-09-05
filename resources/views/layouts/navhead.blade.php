@@ -14,7 +14,7 @@
 		<div class="collapse navbar-collapse" id="navbarSupportedContent">
 			<ul class="navbar-nav mr-auto">
 				<li><a class="nav-link nav-item {{ Request::is('/') ? "active" : "" }}" href="/">Home</a></li>
-				<li><a class="nav-link nav-item {{ Request::is('/about') ? "active" : "" }}"  href="#">About</a></li>
+				<li><a class="nav-link nav-item {{ Request::is('about') ? "active" : "" }}"  href="/about">About</a></li>
 			</ul>
 			<ul class="nav navbar-nav navbar-right">
 				@if(Session::has('cart'))
@@ -34,7 +34,7 @@
 					</button>
 					<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                 	@if(Auth::check())  
-                		<a class="dropdown-item {{ Request::is(Route::has('profile')) ? "active" : "" }}" href="/profile/{{ Auth::user()->id }}">
+                		<a class="dropdown-item {{ setActive('profile/') }}" href="/profile/{{ Auth::user()->id }}">
                 		User Profile (update)</a>
                 		<div class="dropdown-divider"></div>
                 		<a class="dropdown-item" href="{{ route('logout') }}">Logout</a>

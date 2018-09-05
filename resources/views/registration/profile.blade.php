@@ -27,7 +27,7 @@
         	Edit
 		@endif        
         </button>
-        <a class="btn btn-primary" href="/" role="button">Cancel</a>
+        <a class="btn btn-primary" href="{{ url()->previous() }}" role="button">Cancel</a>
         
     </div>
     <div class="form-group">

@@ -16,6 +16,7 @@
 // Route::get('/', 'PostsController@index');
 // TODO: 08/18 combine most Route::get/post/edit/show into Route::resource() 
 Route::get('/', 'PostsController@index')->name('home');
+Route::view('/about', 'about');
 Route::get('/posts', 'PostsController@index');
 
 Route::get('/posts/create', 'PostsController@create');
